@@ -2,13 +2,11 @@
 
 namespace Modules\Core\Commands;
 
-use Mindy\Base\ConsoleCommand;
-use Mindy\Base\Mindy;
+use Mindy\Console\ConsoleCommand;
+use Mindy\Helper\Console;
 use Modules\Core\Components\ModuleManager;
 
 /**
- *
- *
  * All rights reserved.
  *
  * @author Falaleev Maxim
@@ -20,35 +18,30 @@ use Modules\Core\Components\ModuleManager;
  */
 class ModulesCommand extends ConsoleCommand
 {
-    public function actionIndex()
-    {
-        echo $this->color("TODO documentation", 'light_red') . PHP_EOL;
-    }
-
     public function actionInstall($module)
     {
-        if($version = ModuleManager::install($module)) {
-            echo $this->color("Success. Installed version: " . $version, 'green') . PHP_EOL;
+        if ($version = ModuleManager::install($module)) {
+            echo Console::color("Success. Installed version: " . $version, Console::FOREGROUND_GREEN) . PHP_EOL;
         } else {
-            echo $this->color("Failed to install version: " . $version, 'red') . PHP_EOL;
+            echo Console::color("Failed to install version: " . $version, Console::FOREGROUND_RED) . PHP_EOL;
         }
     }
 
     public function actionUpdate($module, $updateToVersion = null)
     {
-        if($version = ModuleManager::update($module, $updateToVersion)) {
-            echo $this->color("Success. Installed version: " . $version, 'green') . PHP_EOL;
+        if ($version = ModuleManager::update($module, $updateToVersion)) {
+            echo Console::color("Success. Installed version: " . $version, Console::FOREGROUND_GREEN) . PHP_EOL;
         } else {
-            echo $this->color("Failed to install version: " . $version, 'red') . PHP_EOL;
+            echo Console::color("Failed to install version: " . $version, Console::FOREGROUND_RED) . PHP_EOL;
         }
     }
 
     public function actionDelete($module)
     {
-        if(ModuleManager::delete($module)) {
-            echo $this->color("Success.", 'green') . PHP_EOL;
+        if (ModuleManager::delete($module)) {
+            echo Console::color("Success.", Console::FOREGROUND_GREEN) . PHP_EOL;
         } else {
-            echo $this->color("Failed.", 'red') . PHP_EOL;
+            echo Console::color("Failed.", Console::FOREGROUND_RED) . PHP_EOL;
         }
     }
 }

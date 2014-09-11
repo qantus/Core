@@ -2,18 +2,19 @@
 
 namespace Modules\Core\Commands;
 
-use Mindy\Base\ConsoleCommand;
+use Mindy\Console\ConsoleCommand;
 use Mindy\Base\Mindy;
 use Mindy\Helper\Alias;
+use Mindy\Helper\Console;
 use Mindy\Orm\Model;
 use Mindy\Orm\Sync;
 use ReflectionClass;
 
 /**
- * 
+ *
  *
  * All rights reserved.
- * 
+ *
  * @author Falaleev Maxim
  * @email max@studio107.ru
  * @version 1.0
@@ -26,15 +27,13 @@ class DbCommand extends ConsoleCommand
 {
     public function actionIndex()
     {
-        echo $this->color("TODO documentation", 'light_red') . PHP_EOL;
+        echo Console::color("TODO documentation", Console::FOREGROUND_LIGHT_RED) . PHP_EOL;
     }
 
     protected function getModels($module = null)
     {
         $checkModule = $module !== null;
-
         $models = [];
-
         $modelFiles = glob(Alias::get('Modules') . '/*/Models/*.php');
 
         foreach(Alias::find('Contrib.*') as $alias) {
