@@ -47,12 +47,15 @@ class CoreController extends Controller
         return $filters;
     }
 
-    public function redirect($url, $data = null, $terminate = true, $statusCode = 302)
+    /**
+     * @DEPRECATED
+     * @param $url
+     * @param null $data
+     * @param int $statusCode
+     */
+    public function redirect($url, $data = null, $statusCode = 302)
     {
-        if (is_object($url) && $url instanceof Model && method_exists($url, 'getAbsoluteUrl')) {
-            $url = $url->getAbsoluteUrl();
-        }
-        parent::redirect($url, $data, $terminate, $statusCode);
+        $this->r->redirect($url, $data, $statusCode);
     }
 
     /**
