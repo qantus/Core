@@ -1,0 +1,153 @@
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    line-height: 1;
+}
+
+ol, ul {
+    list-style: none;
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: none;
+}
+
+:focus {
+    outline: 0;
+}
+
+ins {
+    text-decoration: none;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    font: normal 9pt "Verdana";
+    color: #000;
+    background: #fff;
+}
+
+h1, h2 {
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+    font: normal 18pt Monaco, Consolas, "Liberation Mono", Courier, monospace;
+    color: #800000;
+    margin-bottom: .5em;
+}
+
+h2 {
+    font: normal 14pt Monaco, Consolas, "Liberation Mono", Courier, monospace;
+    color: #800000;
+    margin-bottom: .5em;
+}
+
+h3 {
+    font: bold 11pt "Verdana";
+}
+
+pre {
+    font: normal 11pt Menlo, Consolas, "Lucida Console", Monospace;
+}
+
+pre span.error {
+    display: block;
+    background: #fce3e3;
+}
+
+pre span.ln {
+    color: #999;
+    padding-right: 0.5em;
+    border-right: 1px solid #ccc;
+}
+
+pre span.error-ln {
+    font-weight: bold;
+}
+
+.container {
+    margin: 1em 4em;
+}
+
+.version {
+    color: gray;
+    font-size: 8pt;
+    border-top: 1px solid #aaa;
+    padding-top: 1em;
+    margin-bottom: 1em;
+}
+
+.message {
+    padding: 20px 0;
+    font-size: 11pt;
+    margin-bottom: 1em;
+    border-bottom: 3px solid #F7C8C8;
+}
+
+.source {
+    margin-bottom: 1em;
+}
+
+.code pre {
+    background-color: #ffe;
+    margin: 0.5em 0;
+    padding: 0.5em;
+    line-height: 125%;
+    border: 1px solid #eee;
+}
+
+.source .file {
+    margin-bottom: 1em;
+    font-weight: bold;
+}
+
+.traces {
+    margin: 2em 0;
+}
+
+.trace {
+    margin: 0.5em 0;
+    padding: 0.5em;
+}
+
+.trace.app {
+    border: 1px solid #F7C8C8;
+}
+
+.trace.collapsed pre {
+    display: none;
+}
+
+.trace-file {
+    cursor: pointer;
+    padding: 0.2em;
+}
+
+.trace .content {
+    padding-bottom: 20px;
+}
+
+.trace-file:hover {
+    background: #f0ffff;
+}

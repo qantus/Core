@@ -1,0 +1,47 @@
+{% if this.total %}
+    <section class="pager-container">
+        <span>Всего: {{ this.total }}</span>
+
+        <section class="page-size right">
+            {% include "core/pager/sizes.html" %}
+        </section>
+
+        <ul class="pager">
+            <li class="prev">
+                {% if this.hasPrevPage() %}
+                    <a href="{{ this.getUrl(this.currentPage - 1) }}">&larr;</a>
+                {% else %}
+                    <span>&larr;</span>
+                {% endif %}
+            </li>
+
+            {% if this.hasPrevPage() %}
+                {% for page in this.iterPrevPage() %}
+                    <li>
+                        <a href="{{ this.getUrl(page) }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+
+            <li>
+                <span>{{ this.currentPage }}</span>
+            </li>
+
+            {% if this.hasNextPage() %}
+                {% for page in this.iterNextPage() %}
+                    <li>
+                        <a href="{{ this.getUrl(page) }}">{{ page }}</a>
+                    </li>
+                {% endfor %}
+            {% endif %}
+
+            <li class="next">
+                {% if this.hasNextPage %}
+                    <a href="{{ this.getUrl(this.currentPage+1) }}">&rarr;</a>
+                {% else %}
+                    <span>&rarr;</span>
+                {% endif %}
+            </li>
+        </ul>
+    </section>
+{% endif %}

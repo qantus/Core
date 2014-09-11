@@ -1,0 +1,41 @@
+{% extends request.isAjaxRequest ? 'views/layouts/ajax.twig' : 'views/layouts/base.twig' %}
+
+{% block breadcrumbs %}
+    {% if not breadcrumbs %}
+        {% set breadcrumbs = [
+            {'name': model.listName, 'url': url('//core/admin/tree/list', {'name': get_class(model)}|merge(attributes))},
+            {'name': title}
+        ] %}
+    {% else %}
+        {% set breadcrumbs = breadcrumbs|merge([{'name': title}]) %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    {% set htmlForm = this.beginWidget("MActiveForm", {
+        'id': formName,
+        'enableAutoSave': hasAutoSave,
+        'enableWatchChanges': false,
+        'enableAjaxValidation': true,
+        'htmlOptions': {
+            'enctype': 'multipart/form-data'
+        }
+    }) %}
+
+    {% if hasAutoSave %}
+        {{ htmlForm.autoSaveInfo() }}
+    {% endif %}
+
+    {{ htmlForm.errorSummary(model)|raw }}
+
+    {{ form.setForm(htmlForm).asUl()|raw }}
+
+    {% include "views/modules/core/admin/tree/_buttons.twig" %}
+
+    <p class="clear"></p>
+    <p>&nbsp;</p>
+
+    {{ this.endWidget }}
+{% endblock %}

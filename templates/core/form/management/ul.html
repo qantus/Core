@@ -1,0 +1,28 @@
+{{ form|raw }}
+
+{% for name, inline_list in inlines %}
+    <fieldset class="inline-form">
+        <legend class="inline-title">{{ name }}</legend>
+        {% for inline in inline_list %}
+            <section id="{{ inline.id }}-container" class="form-inline-section">
+                {% if inline.isExtra %}<a href="#{{ inline.id }}-container" class="form-inline-delete" style="display:none" title="Delete">&times;</a>{% endif %}
+                <section id="{{ inline.id }}">
+                    <table>
+                        <tr>
+                            {% for field in inline %}
+                                <td>
+                                    <section  class="form-block {% if field.hidden %}hide{% endif %} {% if field.delete %}actions{% endif %}">
+                                        {{ field|raw }}
+                                    </section>
+                                </td>
+                            {% endfor %}
+                        </tr>
+                    </table>
+                </section>
+            </section>
+            {% if loop.last and inline.showAddButton %}
+                <input type="button" data-max="{{ inline.max }}" {% if inline.max <= inline_list|length %}style="display:none"{% endif %} class="button inline-add" value="Add" data-id="{{ inline.id }}" />
+            {% endif %}
+        {% endfor %}
+    </fieldset>
+{% endfor %}

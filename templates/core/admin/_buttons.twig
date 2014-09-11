@@ -1,0 +1,19 @@
+<section class="button-group float-right">
+    <section class="button-group">
+        {% if model.isNewRecord == false %}
+            <input type="submit" name="_delete" value="{{ t('Delete', 'core') }}" class="button red" />
+        {% endif %}
+    </section>
+
+    <section class="button-group">
+        <input type="submit" name="_save" class="button" value="{{ t('Save', 'core') }}" />
+        <input type="submit" name="_addanother" class="button" value="{{ t('Save and add another', 'core') }}" />
+        <input type="submit" name="_continue" class="button" value="{{ t('Save and continue', 'core') }}" />
+    </section>
+
+    {% if model.absoluteUrl and model.isNewRecord == false %}
+    <section class="button-group">
+        <a target="_blank" class="button" href="{{ model.absoluteUrl }}">{{ t('Open in site', 'core') }}</a>
+    </section>
+    {% endif %}
+</section>

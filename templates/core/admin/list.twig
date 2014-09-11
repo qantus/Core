@@ -1,0 +1,39 @@
+{% extends 'admin/base.twig' %}
+
+{% block breadcrumbs %}
+    {% if not breadcrumbs %}
+        {% set breadcrumbs = [
+            {'name': model.listName, 'url': url('//core/admin/tree/list', {'name': get_class(model), 'id': model.pk}|merge(attributes))}
+        ] %}
+    {% endif %}
+
+    {{ parent() }}
+{% endblock %}
+
+{% block content %}
+    <div class="btn-append">
+        {% if createUrl %}
+            <a class="light_button" href="{{ createUrl }}">
+                <i class="icon-plus-thin"></i>{{ model.getCreateName() }}
+            </a>
+        {% endif %}
+    </div>
+
+    {% if movable %}
+        {{ this.widget('mindy.zii.widgets.grid.MMovableGrid',data)|raw }}
+    {% else %}
+        {{ this.widget('mindy.zii.widgets.grid.MGridView',data)|raw }}
+    {% endif %}
+
+    {% if canDelete %}
+        <button class="button delete-selected">{{ t('Delete selected','core') }}</button>
+    {% endif %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(function(){
+            $('#objects-grid').m_grid({'grid':'objects-grid','deleteUrl': "{{ url('//core/admin/tree/deletemany') }}"});
+        });
+    </script>
+{% endblock %}
