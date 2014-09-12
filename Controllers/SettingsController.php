@@ -57,7 +57,7 @@ class SettingsController extends BackendController
                     $success = false;
                 }
             }
-            $this->r->flash->success(CoreModule::t($success ? 'Settings saved successfully.' : 'Settings save fail.'));
+            $this->r->flash->success(CoreModule::t($success ? 'Settings saved successfully' : 'Settings save fail'));
         }
 
         echo $this->render('core/settings.html', [

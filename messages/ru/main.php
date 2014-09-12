@@ -2,9 +2,9 @@
 
 return array (
   'Changes saved' => 'Изменения сохранены',
-  'Save' => 'Сохранить',
   'Control panel' => 'Панель настроек',
   'Delete' => 'Удалить',
+  'Save' => 'Сохранить',
   'Save and add another' => 'Сохранить и добавить',
   'Save and continue' => 'Сохранить и продолжить',
   'Open in site' => 'Открыть на сайте',
@@ -20,5 +20,6 @@ return array (
   '"{name}" cannot be empty' => '"{name}" не может быть пустым',
   'Home' => 'Главная',
   'Modules' => 'Модули',
+  'Settings' => 'Настройки',
   'Core' => 'Ядро',
 );
