@@ -20,31 +20,6 @@ use Mindy\Orm\Model;
 
 abstract class SettingsModel extends Model
 {
-    public static function __callStatic($method, $args)
-    {
-        $manager = $method . 'Manager';
-        $className = get_called_class();
-        if (method_exists($className, $manager) && is_callable([$className, $manager])) {
-            throw new Exception("You can't use managers in Settings model");
-        } elseif (method_exists($className, $manager) && is_callable([$className, $method])) {
-            return call_user_func_array([$className, $method], $args);
-        } else {
-            throw new Exception("Call unknown method {$method}");
-        }
-    }
-
-    public function __call($method, $args)
-    {
-        $manager = $method . 'Manager';
-        if (method_exists($this, $manager)) {
-            throw new Exception("You can't use managers in Settings model");
-        } elseif (method_exists($this, $method)) {
-            return call_user_func_array([$this, $method], $args);
-        } else {
-            throw new Exception("Call unknown method {$method}");
-        }
-    }
-
     /**
      * @param bool $asArray
      * @return \Mindy\Orm\Orm
@@ -54,15 +29,5 @@ abstract class SettingsModel extends Model
         $className = get_called_class();
         $manager = new Manager(new $className);
         return $manager->asArray($asArray)->getOrCreate(['id' => 1]);
-    }
-
-    public static function objectsManager($instance = null)
-    {
-        throw new Exception("You can't use managers in Settings model");
-    }
-
-    public static function treeManager($instance = null)
-    {
-        throw new Exception("You can't use managers in Settings model");
     }
 }

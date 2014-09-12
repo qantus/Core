@@ -15,6 +15,7 @@
 namespace Modules\Core\Models;
 
 use Mindy\Orm\Fields\CharField;
+use Modules\Core\CoreModule;
 
 class CoreSettings extends SettingsModel
 {
@@ -22,7 +23,8 @@ class CoreSettings extends SettingsModel
     {
         return [
             'sitename' => [
-                'class' => CharField::className()
+                'class' => CharField::className(),
+                'verboseName' => CoreModule::t('Sitename', [], 'settings')
             ]
         ];
     }

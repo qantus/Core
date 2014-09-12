@@ -6,7 +6,7 @@
         <form action="{% url 'core.settings' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ data.form|safe }}
-            <input type="submit" value="Сохранить" />
+            <input type="submit" value="Сохранить" class="button" />
         </form>
     {% endfor %}
 {% endblock %}
