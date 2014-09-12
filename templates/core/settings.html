@@ -1,0 +1,12 @@
+{% extends 'admin/base.html' %}
+
+{% block content %}
+    <h1>Центр настроек</h1>
+    {% for _, data in models %}
+        <form action="{% url 'core.settings' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ data.form|safe }}
+            <input type="submit" value="Сохранить" />
+        </form>
+    {% endfor %}
+{% endblock %}

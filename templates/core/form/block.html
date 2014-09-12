@@ -2,7 +2,7 @@
     {% for fieldset, fields in form.fieldsets %}
         <fieldset>
             <legend>{{ fieldset }}</legend>
-            {{ form.render("core/form/block-fields.html", fields)|raw }}
+            {{ form.render("core/form/block-fields.html", fields) }}
         </fieldset>
     {% endfor %}
 {% else %}
