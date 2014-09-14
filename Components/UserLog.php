@@ -48,6 +48,7 @@ class UserLog
     {
         $path = Alias::get('application.runtime.users') . '.log';
         if(file_exists($path) === false) {
+            file_put_contents($path, '');
             return [];
         }
         $lines = explode("\n", file_get_contents($path));

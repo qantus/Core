@@ -19,6 +19,11 @@ use Modules\Core\CoreModule;
 
 class CoreSettings extends SettingsModel
 {
+    public function __toString()
+    {
+        return (string) $this->t('Core settings');
+    }
+
     public static function getFields()
     {
         return [

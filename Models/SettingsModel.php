@@ -30,4 +30,9 @@ abstract class SettingsModel extends Model
         $manager = new Manager(new $className);
         return $manager->asArray($asArray)->getOrCreate(['id' => 1]);
     }
+
+    public function t($text)
+    {
+        return $this->getModule()->t($text, [], 'settings');
+    }
 }

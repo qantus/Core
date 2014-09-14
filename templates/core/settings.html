@@ -1,8 +1,9 @@
-{% extends 'admin/base.html' %}
+{% extends request.isAjax ? 'ajax.html' : 'admin/base.html' %}
 
 {% block content %}
     <h1>Центр настроек</h1>
     {% for _, data in models %}
+        <h4>{{ data.model }}</h4>
         <form action="{% url 'core.settings' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ data.form|safe }}
