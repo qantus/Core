@@ -39,6 +39,10 @@ class CoreModule extends Module
                 [
                     'name' => self::t('Settings'),
                     'url' => 'core.settings'
+                ],
+                [
+                    'name' => self::t('Help'),
+                    'url' => 'core.help-online'
                 ]
             ]
         ];
