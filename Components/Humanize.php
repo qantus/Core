@@ -47,8 +47,14 @@ class Humanize
         return $ending;
     }
 
-    public static function humanizeDate(DateInterval $diff, DateTime $date, $dateFormat = 'd.m.Y')
+    public static function humanizeDate(DateTime $date, $dateFormat = 'd.m.Y')
     {
+        $now = new DateTime();
+        $now->setTime(0,0,0);
+        $clonedDate = clone $date;
+        $clonedDate->setTime(0,0,0);
+        $diff = $now->diff($clonedDate);
+
         if ($diff->days == 0) {
             return CoreModule::t('Today', [], 'time');
         }elseif($diff->days == 1){
@@ -86,12 +92,11 @@ class Humanize
 
     public static function humanizeDateTime($dateRaw, $dateFormat = 'd.m.Y', $timeFormat = 'H:i', $delimiter = ', ')
     {
-
         $date = new DateTime($dateRaw);
         $now = new DateTime();
         $diff = $date->diff($now);
 
-        $humanizeDate = self::humanizeDate($diff, $date, $dateFormat);
+        $humanizeDate = self::humanizeDate($date, $dateFormat);
         list($showDate, $humanizeTime) = self::humanizeTime($diff, $date, $timeFormat);
 
         $humanized = [];
