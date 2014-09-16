@@ -7,4 +7,5 @@ return array (
   'minutes4' => 'минуты',
   'minutes5' => 'минут',
   'Just now' => 'Только что',
+  '{minutes} {ending} ago' => '{minutes} {ending} назад'
 );
