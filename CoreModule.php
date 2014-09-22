@@ -18,6 +18,28 @@ class CoreModule extends Module
      */
     public $update;
 
+    public static function preConfigure()
+    {
+        $tpl = Mindy::app()->template;
+        $tpl->addHelper('t', ['\Mindy\Base\YiiUtils', 't']);
+        $tpl->addHelper('convert_base64', ['\Modules\Mail\Helper\MailHelper', 'convertToBase64']);
+        $tpl->addHelper('ucfirst', ['\Mindy\Helper\Text', 'mbUcfirst']);
+        $tpl->addHelper('debug_panel', ['\Modules\Core\Components\DebugPanel', 'render']);
+        $tpl->addHelper('param', ['\Modules\Core\Components\ParamsHelper', 'get']);
+        $tpl->addHelper('humanizeDateTime', ['\Modules\Core\Components\Humanize', 'humanizeDateTime']);
+        $tpl->addHelper('limit', ['\Mindy\Helper\Text', 'limit']);
+        $tpl->addHelper('strtotime', 'strtotime');
+        $tpl->addHelper('time', 'time');
+        $tpl->addHelper('is_file', 'is_file');
+        $tpl->addHelper('d', 'd');
+        $tpl->addHelper('method_exists', function ($obj, $name) {
+            return method_exists($obj, $name);
+        });
+        $tpl->addHelper('user_actions', function ($by = 10) {
+            return \Modules\Core\Components\UserLog::read($by);
+        });
+    }
+
     public function init()
     {
         $this->update = new Update([
