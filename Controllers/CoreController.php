@@ -34,7 +34,7 @@ class CoreController extends Controller
 
     public function filters()
     {
-        $filters = array();
+        $filters = [];
 
 //        if(Yii::app()->hasModule('user')) {
 //            $filters[] = array(
