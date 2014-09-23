@@ -14,6 +14,7 @@
 
 namespace Modules\Core\Models;
 
+use Mindy\Orm\Fields\EmailField;
 use Mindy\Orm\Fields\CharField;
 use Modules\Core\CoreModule;
 
@@ -30,6 +31,10 @@ class CoreSettings extends SettingsModel
             'sitename' => [
                 'class' => CharField::className(),
                 'verboseName' => CoreModule::t('Sitename', [], 'settings')
+            ],
+            'email_owner' => [
+                'class' => EmailField::className(),
+                'verboseName' => CoreModule::t('Email site owner', [], 'settings')
             ]
         ];
     }
