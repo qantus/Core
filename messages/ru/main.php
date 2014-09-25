@@ -18,5 +18,5 @@ return array (
   'Home' => 'Главная',
   'Modules' => 'Модули',
   'Settings' => 'Настройки',
-  'Core' => 'Ядро',
+  'Core' => 'Ядро'
 );

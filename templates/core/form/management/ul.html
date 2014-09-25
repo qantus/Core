@@ -10,7 +10,7 @@
                     <table>
                         <tr>
                             {% for field in inline %}
-                                <td>
+                                <td class="{% if field.hidden %}hide{% endif %} {% if field.delete %}actions{% endif %}">
                                     <section  class="form-block {% if field.hidden %}hide{% endif %} {% if field.delete %}actions{% endif %}">
                                         {{ field|raw }}
                                     </section>
@@ -21,7 +21,7 @@
                 </section>
             </section>
             {% if loop.last and inline.showAddButton %}
-                <input type="button" data-max="{{ inline.max }}" {% if inline.max <= inline_list|length %}style="display:none"{% endif %} class="button inline-add" value="Add" data-id="{{ inline.id }}" />
+                <input type="button" data-max="{{ inline.max }}" {% if inline.max <= inline_list|length %}style="display:none"{% endif %} class="button inline-add" value="{{ t('Add', 'core.forms') }}" data-id="{{ inline.id }}" />
             {% endif %}
         {% endfor %}
     </fieldset>
