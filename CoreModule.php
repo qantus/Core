@@ -4,7 +4,6 @@ namespace Modules\Core;
 
 use Mindy\Base\Mindy;
 use Mindy\Base\Module;
-use Mindy\Helper\Alias;
 use Mindy\Update\Update;
 
 class CoreModule extends Module
@@ -42,11 +41,11 @@ class CoreModule extends Module
 
     public function init()
     {
-        $this->update = new Update([
-            'repoUrl' => $this->repositoryUrl,
-            'installDir' => Alias::get('application.Modules'),
-            'downloadDir' => Alias::get('application.runtime'),
-        ]);
+        // $this->update = new Update([
+        //     'repoUrl' => $this->repositoryUrl,
+        //     'installDir' => Alias::get('application.Modules'),
+        //     'downloadDir' => Alias::get('application.runtime'),
+        // ]);
     }
 
     public function getMenu()
@@ -54,10 +53,10 @@ class CoreModule extends Module
         return [
             'name' => $this->getName(),
             'items' => [
-                [
-                    'name' => self::t('Modules'),
-                    'url' => 'core.module_list'
-                ],
+                // [
+                //     'name' => self::t('Modules'),
+                //     'url' => 'core.module_list'
+                // ],
                 [
                     'name' => self::t('Settings'),
                     'url' => 'core.settings'
