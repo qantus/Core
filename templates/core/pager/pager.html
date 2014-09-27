@@ -1,12 +1,8 @@
 {% if this.getPagesCount() > 1 %}
-    <section class="pager-container">
-        <span>Всего: {{ this.total }}</span>
+    <section class="pager-container row">
+        <section class="total columns large-2">Всего: {{ this.total }}</section>
 
-        <section class="page-size right">
-            {% include "core/pager/sizes.html" %}
-        </section>
-
-        <ul class="pager">
+        <ul class="pager columns large-8">
             <li class="prev">
                 {% if this.hasPrevPage() %}
                     <a href="{{ this.getUrl(this.currentPage - 1) }}">&larr;</a>
@@ -43,5 +39,9 @@
                 {% endif %}
             </li>
         </ul>
+
+        <section class="page-size columns large-2">
+            {% include "core/pager/sizes.html" %}
+        </section>
     </section>
 {% endif %}

@@ -8,15 +8,15 @@
                 {% if inline.isExtra %}<a href="#{{ inline.id }}-container" class="form-inline-delete" style="display:none" title="Delete">&times;</a>{% endif %}
                 <section id="{{ inline.id }}">
                     <table>
-                        <tr>
-                            {% for field in inline %}
+                        {% for field in inline %}
+                            <tr>
                                 <td class="{% if field.hidden %}hide{% endif %} {% if field.delete %}actions{% endif %}">
                                     <section  class="form-block {% if field.hidden %}hide{% endif %} {% if field.delete %}actions{% endif %}">
                                         {{ field|raw }}
                                     </section>
                                 </td>
-                            {% endfor %}
-                        </tr>
+                            </tr>
+                        {% endfor %}
                     </table>
                 </section>
             </section>

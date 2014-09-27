@@ -2,6 +2,7 @@
 
 namespace Modules\Core\Controllers;
 
+use Mindy\Base\Mindy;
 use Mindy\Controller\BaseController;
 use Mindy\Helper\Json;
 use Mindy\Utils\RenderTrait;
@@ -24,8 +25,13 @@ class Controller extends BaseController
 
     public function render($view, array $data = [])
     {
+        $site = null;
+        if (Mindy::app()->hasModule('Sites')) {
+            $site = Mindy::app()->getModule('Sites')->getSite();
+        }
         return $this->renderTemplate($view, array_merge([
-            'this' => $this
+            'this' => $this,
+            'site' => $site
         ], $data));
     }
 
