@@ -21,9 +21,11 @@ class SettingsController extends BackendController
                 $modelsPath[$name] = [];
             }
 
-            $modelsPath[$name] = array_merge($modelsPath[$name], array_map(function($path) use ($name, $tmpPath) {
-                return 'Modules\\' . $name . '\\Models\\'. str_replace('.php', '', str_replace($tmpPath, '', $path));
-            }, $paths));
+            if (is_array($paths)) {
+                $modelsPath[$name] = array_merge($modelsPath[$name], array_map(function($path) use ($name, $tmpPath) {
+                    return 'Modules\\' . $name . '\\Models\\'. str_replace('.php', '', str_replace($tmpPath, '', $path));
+                }, $paths));
+            }
         }
         return $modelsPath;
     }
