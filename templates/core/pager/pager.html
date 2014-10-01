@@ -2,7 +2,7 @@
     <section class="pager-container row">
         <section class="total columns large-2">Всего: {{ this.total }}</section>
 
-        <ul class="pager columns large-8">
+        <ul class="pager columns large-8 no-bullet">
             <li class="prev">
                 {% if this.hasPrevPage() %}
                     <a href="{{ this.getUrl(this.currentPage - 1) }}">&larr;</a>

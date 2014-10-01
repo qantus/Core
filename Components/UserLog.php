@@ -46,7 +46,7 @@ class UserLog
 
     public static function read($count)
     {
-        $path = Alias::get('application.runtime.users') . '.log';
+        $path = Alias::get('application.runtime.users') . '-' .date('Y-m-d') . '.log';
         if(file_exists($path) === false) {
             file_put_contents($path, '');
             return [];
