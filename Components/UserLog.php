@@ -14,7 +14,6 @@
 
 namespace Modules\Core\Components;
 
-use Modules\Core\Components\Humanize;
 use Mindy\Base\Mindy;
 use Mindy\Helper\Alias;
 use Modules\User\UserModule;
@@ -23,7 +22,7 @@ class UserLog
 {
     public static $key = 'users';
 
-    public static function log($message)
+    public static function log($message, $module = 'Core')
     {
         $app = Mindy::app();
         $user_pk = 0;
@@ -36,7 +35,12 @@ class UserLog
             $username = $app->user->username;
         }
 
-        return $app->logger->info($user_pk . ' ' . $username . ' ' . $message, self::$key);
+        return $app->logger->info(implode(' ', [
+            $module,
+            $user_pk,
+            $username,
+            $message
+        ]), self::$key);
     }
 
     public static function replaceLinks($line)
@@ -61,6 +65,7 @@ class UserLog
             $tmp = explode(' ', $tmp);
             $date = array_shift($tmp);
             $time = array_shift($tmp);
+            $module = array_shift($tmp);
             $user_id = array_shift($tmp);
             $username = array_shift($tmp);
             $humanized = Humanize::humanizeDateTime($date . ' ' . $time);
@@ -71,7 +76,8 @@ class UserLog
                 'user_id' => $user_id,
                 'username' => $username,
                 'message' => implode(' ', $tmp),
-                'humanized_date' => $humanized
+                'humanized_date' => $humanized,
+                'module' => $module
             ];
         }, $lines);
         return array_slice($lines, 0, $count);
