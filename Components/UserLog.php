@@ -30,7 +30,7 @@ class UserLog
             $user_pk = $app->user->pk;
         }
 
-        $username = UserModule::t('Guest');
+        $username = 'Guest';
         if ($app->user->username) {
             $username = $app->user->username;
         }
