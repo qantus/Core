@@ -30,10 +30,12 @@ class CoreSettings extends SettingsModel
         return [
             'sitename' => [
                 'class' => CharField::className(),
+                'null' => true,
                 'verboseName' => CoreModule::t('Sitename', [], 'settings')
             ],
             'email_owner' => [
                 'class' => EmailField::className(),
+                'null' => true,
                 'verboseName' => CoreModule::t('Email site owner', [], 'settings')
             ]
         ];
