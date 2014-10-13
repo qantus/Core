@@ -147,23 +147,6 @@ class CoreController extends Controller
     }
 
     /**
-     * @param $code
-     * @param null $message
-     * @throws HttpException
-     */
-    public function error($code, $message = null)
-    {
-        $codes = [
-            400 => 'Invalid request. Please do not repeat this request again.',
-            403 => 'You are not authorized to perform this action.',
-            404 => 'The requested page does not exist.',
-            500 => 'Error',
-        ];
-
-        throw new HttpException($code, CoreModule::t($message === null ? $codes[$code] : $message, [], 'errors'));
-    }
-
-    /**
      * If isset next attribute in $_POST or $_GET - redirect
      * @void
      */
