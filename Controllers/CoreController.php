@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Controllers;
 
-use Mindy\Base\Exception\HttpException;
+use Mindy\Exception\HttpException;
 use Mindy\Base\Mindy;
 use Mindy\Orm\Model;
 use Modules\Core\CoreModule;
