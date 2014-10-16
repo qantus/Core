@@ -5,6 +5,7 @@ namespace Modules\Core;
 use Mindy\Base\Mindy;
 use Mindy\Base\Module;
 use Mindy\Update\Update;
+use Modules\Core\Components\UserLog;
 
 class CoreModule extends Module
 {
@@ -19,7 +20,9 @@ class CoreModule extends Module
 
     public static function preConfigure()
     {
-        $tpl = Mindy::app()->template;
+        $app = Mindy::app();
+
+        $tpl = $app->template;
         $tpl->addHelper('t', ['\Mindy\Base\YiiUtils', 't']);
         $tpl->addHelper('convert_base64', ['\Modules\Mail\Helper\MailHelper', 'convertToBase64']);
         $tpl->addHelper('ucfirst', ['\Mindy\Helper\Text', 'mbUcfirst']);
@@ -38,6 +41,30 @@ class CoreModule extends Module
         $tpl->addHelper('user_actions', function ($by = 10) {
             return \Modules\Core\Components\UserLog::read($by);
         });
+
+        $signal = $app->signal;
+        $signal->handler('\Mindy\Orm\Model', 'afterSave', [__CLASS__, 'afterSaveModel']);
+        $signal->handler('\Mindy\Orm\Model', 'afterDelete', [__CLASS__, 'afterDeleteModel']);
+    }
+
+    public static function recordActionInternal($owner, $text)
+    {
+        $url = method_exists($owner, 'getAbsoluteUrl') ? $owner->getAbsoluteUrl() : '#';
+        UserLog::log(self::t('{model} [[{url}|{name}]] ' . $text, [
+            '{model}' => self::t($owner->classNameShort()),
+            '{url}' => $url,
+            '{name}' => (string)$owner
+        ]));
+    }
+
+    public static function afterSaveModel($owner, $isNew)
+    {
+        self::recordActionInternal($owner, $isNew ? 'was created' : 'was updated');
+    }
+
+    public static function afterDeleteModel($owner)
+    {
+        self::recordActionInternal($owner, 'was deleted');
     }
 
     public function init()
