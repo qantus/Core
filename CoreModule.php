@@ -23,7 +23,20 @@ class CoreModule extends Module
         $app = Mindy::app();
 
         $tpl = $app->template;
-        $tpl->addHelper('t', ['\Mindy\Base\YiiUtils', 't']);
+        $tpl->addHelper('t', function($text, $category, $params = []) {
+            if ($category !== 'app' && !strpos($category, '.')) {
+                $category .= '.main';
+            }
+            $findCategory = explode('.', $category);
+            $moduleNameRaw = ucfirst($findCategory[0]);
+            if(Mindy::app()->hasModule($moduleNameRaw)) {
+                $module = Mindy::app()->getModule($moduleNameRaw);
+                $moduleName = get_class($module) . '.' . $findCategory[1];
+                return Mindy::t($moduleName, $text, $params);
+            } else {
+                return $text;
+            }
+        });
         $tpl->addHelper('convert_base64', ['\Modules\Mail\Helper\MailHelper', 'convertToBase64']);
         $tpl->addHelper('ucfirst', ['\Mindy\Helper\Text', 'mbUcfirst']);
         $tpl->addHelper('debug_panel', ['\Modules\Core\Components\DebugPanel', 'render']);
@@ -43,8 +56,8 @@ class CoreModule extends Module
         });
 
         $signal = $app->signal;
-        $signal->handler('\Mindy\Orm\Model', 'afterSave', [__CLASS__, 'afterSaveModel']);
-        $signal->handler('\Mindy\Orm\Model', 'afterDelete', [__CLASS__, 'afterDeleteModel']);
+        $signal->handler('\Mindy\Orm\Model', 'afterSave', [self::className(), 'afterSaveModel']);
+        $signal->handler('\Mindy\Orm\Model', 'afterDelete', [self::className(), 'afterDeleteModel']);
     }
 
     public static function recordActionInternal($owner, $text)

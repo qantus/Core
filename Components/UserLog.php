@@ -26,12 +26,12 @@ class UserLog
     {
         $app = Mindy::app();
         $user_pk = 0;
-        if ($app->user->pk) {
+        if ($app->user && $app->user->pk) {
             $user_pk = $app->user->pk;
         }
 
         $username = 'Guest';
-        if ($app->user->username) {
+        if ($app->user && $app->user->username) {
             $username = $app->user->username;
         }
 
