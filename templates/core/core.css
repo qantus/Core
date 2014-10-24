@@ -269,11 +269,11 @@
 }
 
 .syntaxhighlighter .gutter .line {
-    border-right: 3px solid #6ce26c !important
+    border-right: 3px solid #a00 !important
 }
 
 .syntaxhighlighter .gutter .line.highlighted {
-    background-color: #6ce26c !important;
+    background-color: #a00 !important;
     color: #fff !important
 }
 
@@ -288,7 +288,7 @@
 .syntaxhighlighter.collapsed .toolbar {
     color: #00f !important;
     background: #fff !important;
-    border: 1px solid #6ce26c !important
+    border: 1px solid #a00 !important
 }
 
 .syntaxhighlighter.collapsed .toolbar a {
@@ -301,7 +301,7 @@
 
 .syntaxhighlighter .toolbar {
     color: #fff !important;
-    background: #6ce26c !important;
+    background: #a00 !important;
     border: 0 !important
 }
 

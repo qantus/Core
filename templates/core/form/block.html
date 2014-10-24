@@ -15,6 +15,9 @@
 
 {% if form.fieldsets %}
     {% for fieldset, fields in form.fieldsets %}
+        {% if fields|length == 0 %}
+            {% continue %}
+        {% endif %}
         <fieldset>
             <legend>{{ fieldset }}</legend>
             {{ form.render("core/form/block-fields.html", fields)|raw }}

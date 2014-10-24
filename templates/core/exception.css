@@ -42,29 +42,31 @@ table {
 }
 
 body {
-    font: normal 9pt "Verdana";
-    color: #000;
+    font-size: 14px;
+    font-weight: 400;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #353535;
     background: #fff;
 }
 
-h1, h2 {
+h1, h2, h3, h4, h5, h6 {
     -webkit-font-smoothing: antialiased;
+    font-family: "Helvetica Neue", Arial;
+    color: #353535;
+    margin-bottom: .5em;
+    font-weight: 700;
 }
 
 h1 {
-    font: normal 18pt Monaco, Consolas, "Liberation Mono", Courier, monospace;
-    color: #800000;
-    margin-bottom: .5em;
+    font-size: 32px;
 }
 
 h2 {
-    font: normal 14pt Monaco, Consolas, "Liberation Mono", Courier, monospace;
-    color: #800000;
-    margin-bottom: .5em;
+    font-size: 22px;
 }
 
 h3 {
-    font: bold 11pt "Verdana";
+    font-size: 14px;
 }
 
 pre {
@@ -131,23 +133,17 @@ pre span.error-ln {
     padding: 0.5em;
 }
 
-.trace.app {
-    border: 1px solid #F7C8C8;
-}
-
 .trace.collapsed pre {
     display: none;
 }
 
 .trace-file {
     cursor: pointer;
-    padding: 0.2em;
+    margin-bottom: 20px;
+    background-color: #f1f1f1;
+    padding: 15px 25px;
 }
 
 .trace .content {
     padding-bottom: 20px;
-}
-
-.trace-file:hover {
-    background: #f0ffff;
 }
