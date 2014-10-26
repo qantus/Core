@@ -1,10 +1,8 @@
 {% if form.errors %}
     <ul class="no-bullet form-errors">
         {% for name, errors in form.errors %}
-            {% for name, errors in form.errors %}
-                {% for error in errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
+            {% for error in errors %}
+                <li>{{ error }}</li>
             {% endfor %}
         {% endfor %}
     </ul>
