@@ -40,7 +40,7 @@ class UserLog
             $user_pk,
             $username,
             $message
-        ]), self::$key);
+        ]), [], self::$key);
     }
 
     public static function replaceLinks($line)
