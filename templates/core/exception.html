@@ -12,8 +12,8 @@
 <body>
 <div class="container">
     <div class="message">
-        <h1>{{ data.type }}</h1>
-        <h2>{{ data.message }}</h2>
+        <h1>{{ data.type|safe }}</h1>
+        <h2>{{ data.message|safe }}</h2>
     </div>
 
     <div class="source">
