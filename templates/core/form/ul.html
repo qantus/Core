@@ -26,19 +26,37 @@
 {% endif %}
 
 {% for name, instances in inlines %}
+    <hr/>
     <section class="inline-form">
         <h3 class="inline-title">{{ name }}</h3>
         {% for inline in instances %}
-            <section id="{{ inline.id }}-container" class="inline-form-item">
+            <section id="{{ inline.id }}-container" class="inline-form-item form-inline-section">
+                {% if inline.errors %}
+                    <ul class="no-bullet form-errors">
+                        {% for errors in inline.errors %}
+                            {% for error in errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+
                 <table id="{{ inline.id }}" class="form-inline-table">
-                    {% for field in inline %}
                     <tr>
-                            <td {% if field.hidden %} class="hide"{% endif %}{% if field.delete %} class="actions" align="right"{% endif %}>
-                                {{ field|raw }}
+                    {% for field in inline %}
+                        {% if not field.hidden %}
+                            <td>
+                                {{ field|safe }}
                             </td>
-                    </tr>
+                        {% endif %}
                     {% endfor %}
+                    </tr>
                 </table>
+                {% for field in inline %}
+                    {% if field.hidden %}
+                        {{ field|safe }}
+                    {% endif %}
+                {% endfor %}
             </section>
             {% if loop.last %}
                 <input type="button" class="button inline-add" value="Add" data-id="{{ inline.id }}-container" />
