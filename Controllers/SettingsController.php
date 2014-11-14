@@ -47,15 +47,14 @@ class SettingsController extends BackendController
 
     public function actionIndex()
     {
-        $this->addBreadcrumb('Центр настроек');
+        $this->addBreadcrumb(CoreModule::t('Settings center'));
 
         $models = $this->reformatModels($this->getSettingsModels());
         if($this->r->isPost) {
             $success = true;
             foreach($models as $data) {
                 $form = $data['form'];
-                $complete = $form->setAttributes($_POST)->isValid() && $form->save();
-                if(!$complete) {
+                if(($form->populate($_POST)->isValid() && $form->save()) === false) {
                     $success = false;
                 }
             }
