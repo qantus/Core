@@ -26,14 +26,19 @@ class TreeCommand extends ConsoleCommand
         }
 
         $i = 0;
-        while($className::objects()->filter(['lft__isnull' => true])->count() != 0) {
+        $skip = [];
+        while ($className::objects()->filter(['lft__isnull' => true])->count() != 0) {
             $i++;
             $fixed = 0;
             echo "Iteration: " . $i . PHP_EOL;
-            $models = $className::objects()->filter(['lft__isnull' => true])->order(['parent_id'])->all();
+            $models = $className::objects()
+                ->exclude(['pk__in' => $skip])
+                ->filter(['lft__isnull' => true])
+                ->order(['parent_id'])->all();
             foreach ($models as $model) {
                 $model->lft = $model->rgt = $model->level = $model->root = null;
-                if($model->saveRebuild()) {
+                if ($model->saveRebuild()) {
+                    $skip[] = $model->pk;
                     $fixed++;
                 }
                 echo '.';
