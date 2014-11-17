@@ -2,10 +2,8 @@
 
 namespace Modules\Core\Controllers;
 
-use Mindy\Exception\HttpException;
 use Mindy\Base\Mindy;
-use Mindy\Orm\Model;
-use Modules\Core\CoreModule;
+use Mindy\Exception\HttpException;
 
 /**
  *
@@ -146,19 +144,29 @@ class CoreController extends Controller
         }
     }
 
+    public function getNextUrl()
+    {
+        if (isset($_POST['_next']) || isset($_GET['_next'])) {
+            if (isset($_POST['_next']) && !empty($_POST['_next'])) {
+                return $_POST['_next'];
+            } else if (isset($_GET['_next']) && !empty($_GET['_next'])) {
+                return $_GET['_next'];
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
     /**
      * If isset next attribute in $_POST or $_GET - redirect
      * @void
      */
     protected function redirectNext()
     {
-        if(isset($_POST['_next']) || isset($_GET['_next'])) {
-            if(isset($_POST['_next'])) {
-                $this->redirect($_POST['_next']);
-            }
-            if(isset($_GET['_next'])) {
-                $this->redirect($_GET['_next']);
-            }
+        if ($url = $this->getNextUrl()) {
+            $this->redirect($url);
         }
     }
 }
