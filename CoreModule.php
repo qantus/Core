@@ -4,7 +4,7 @@ namespace Modules\Core;
 
 use Mindy\Base\Mindy;
 use Mindy\Base\Module;
-use Mindy\Update\Update;
+use Mindy\Locale\Translate;
 use Modules\Core\Components\UserLog;
 
 class CoreModule extends Module
@@ -23,13 +23,13 @@ class CoreModule extends Module
         $app = Mindy::app();
 
         $tpl = $app->template;
-        $tpl->addHelper('t', function($text, $category, $params = []) {
+        $tpl->addHelper('t', function ($text, $category, $params = []) {
             if ($category !== 'app' && !strpos($category, '.')) {
                 $category .= '.main';
             }
             $findCategory = explode('.', $category);
             $moduleNameRaw = ucfirst($findCategory[0]);
-            if(Mindy::app()->hasModule($moduleNameRaw)) {
+            if (Mindy::app()->hasModule($moduleNameRaw)) {
                 $module = Mindy::app()->getModule($moduleNameRaw);
                 $moduleName = get_class($module) . '.' . $findCategory[1];
                 return Mindy::t($moduleName, $text, $params);
@@ -48,6 +48,9 @@ class CoreModule extends Module
         $tpl->addHelper('time', 'time');
         $tpl->addHelper('is_file', 'is_file');
         $tpl->addHelper('d', 'd');
+        $tpl->addHelper('locale_date', function ($timestamp, $format = 'd MMMM yyyy') {
+            return Translate::getInstance()->getDateFormatter()->format($format, $timestamp);
+        });
         $tpl->addHelper('method_exists', function ($obj, $name) {
             return method_exists($obj, $name);
         });
