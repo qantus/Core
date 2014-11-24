@@ -54,7 +54,7 @@ class SettingsController extends BackendController
             $success = true;
             foreach($models as $data) {
                 $form = $data['form'];
-                if(($form->populate($_POST)->isValid() && $form->save()) === false) {
+                if(($form->populate($_POST, $_FILES)->isValid() && $form->save()) === false) {
                     $success = false;
                 }
             }
