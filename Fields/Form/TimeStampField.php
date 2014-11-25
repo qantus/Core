@@ -9,9 +9,9 @@
 namespace Modules\Core\Fields\Form;
 
 
-use Mindy\Form\Fields\TextField;
+use Mindy\Form\Fields\CharField;
 
-class TimeStampField extends TextField
+class TimeStampField extends CharField
 {
     public $format = 'd.m.Y';
     public $autoNow = false;

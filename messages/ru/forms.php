@@ -1,6 +1,6 @@
 <?php
 
-return array(
-    'Delete' => 'Удалить',
-    'Add' => 'Добавить'
+return array (
+  'Add' => 'Добавить',
+  'Delete' => 'Удалить',
 );
