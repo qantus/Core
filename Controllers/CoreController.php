@@ -4,6 +4,7 @@ namespace Modules\Core\Controllers;
 
 use Mindy\Base\Mindy;
 use Mindy\Exception\HttpException;
+use Mindy\Orm\Model;
 
 /**
  *
@@ -168,5 +169,25 @@ class CoreController extends Controller
         if ($url = $this->getNextUrl()) {
             $this->redirect($url);
         }
+    }
+
+    public function getOr404($object, $params = null)
+    {
+        if (!is_array($params)) {
+            $params = ['pk' => $params];
+        }
+
+        $model = null;
+        if ($object instanceof Model) {
+            $model = $object->objects()->get($params);
+        } else {
+            $model = $object->get($params);
+        }
+
+        if ($model === null) {
+            $this->error(404);
+        }
+
+        return $model;
     }
 }

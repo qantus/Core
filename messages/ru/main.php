@@ -4,7 +4,7 @@ return array (
   'Changes saved' => 'Изменения сохранены',
   'Control panel' => 'Панель настроек',
   'Settings center' => 'Центр настроек',
-  'Add' => '',
+  'Add' => 'Добавить',
   'Site name' => 'Название сайта',
   'Today' => 'Сегодня',
   'Yesterday' => 'Вчера',
