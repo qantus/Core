@@ -4,7 +4,9 @@ namespace Modules\Core\Controllers;
 
 use Mindy\Base\Mindy;
 use Mindy\Exception\HttpException;
+use Mindy\Orm\Manager;
 use Mindy\Orm\Model;
+use Mindy\Orm\QuerySet;
 
 /**
  *
@@ -177,10 +179,14 @@ class CoreController extends Controller
             $params = ['pk' => $params];
         }
 
+        if (is_string($object)) {
+            $object = new $object;
+        }
+
         $model = null;
         if ($object instanceof Model) {
             $model = $object->objects()->get($params);
-        } else {
+        } elseif ($object instanceof Manager || $object instanceof QuerySet) {
             $model = $object->get($params);
         }
 
