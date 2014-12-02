@@ -6,6 +6,7 @@ use Mindy\Base\Mindy;
 use Mindy\Form\ModelForm;
 use Mindy\Helper\Alias;
 use Modules\Core\CoreModule;
+use Modules\Core\Forms\SettingsForm;
 
 class SettingsController extends BackendController
 {
@@ -14,16 +15,16 @@ class SettingsController extends BackendController
         $modulesPath = Alias::get('Modules');
         $modules = Mindy::app()->modules;
         $modelsPath = [];
-        foreach($modules as $name => $params) {
+        foreach ($modules as $name => $params) {
             $tmpPath = $modulesPath . '/' . $name . '/Models/';
             $paths = glob($tmpPath . '*Settings.php');
-            if(!array_key_exists($name, $modelsPath)) {
+            if (!array_key_exists($name, $modelsPath)) {
                 $modelsPath[$name] = [];
             }
 
             if (is_array($paths)) {
-                $modelsPath[$name] = array_merge($modelsPath[$name], array_map(function($path) use ($name, $tmpPath) {
-                    return 'Modules\\' . $name . '\\Models\\'. str_replace('.php', '', str_replace($tmpPath, '', $path));
+                $modelsPath[$name] = array_merge($modelsPath[$name], array_map(function ($path) use ($name, $tmpPath) {
+                    return 'Modules\\' . $name . '\\Models\\' . str_replace('.php', '', str_replace($tmpPath, '', $path));
                 }, $paths));
             }
         }
@@ -33,12 +34,12 @@ class SettingsController extends BackendController
     protected function reformatModels(array $moduleModels)
     {
         $models = [];
-        foreach($moduleModels as $tmpModels) {
-            foreach($tmpModels as $modelClass) {
+        foreach ($moduleModels as $tmpModels) {
+            foreach ($tmpModels as $modelClass) {
                 $model = $modelClass::getInstance();
                 $models[$modelClass] = [
                     'model' => $model,
-                    'form' => new ModelForm(['instance' => $model])
+                    'form' => new SettingsForm(['model' => $model, 'instance' => $model])
                 ];
             }
         }
@@ -50,11 +51,11 @@ class SettingsController extends BackendController
         $this->addBreadcrumb(CoreModule::t('Settings center'));
 
         $models = $this->reformatModels($this->getSettingsModels());
-        if($this->r->isPost) {
+        if ($this->r->isPost) {
             $success = true;
-            foreach($models as $data) {
+            foreach ($models as $data) {
                 $form = $data['form'];
-                if(($form->populate($_POST, $_FILES)->isValid() && $form->save()) === false) {
+                if (($form->populate($_POST, $_FILES)->isValid() && $form->save()) === false) {
                     $success = false;
                 }
             }
