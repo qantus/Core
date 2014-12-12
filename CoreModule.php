@@ -42,6 +42,7 @@ class CoreModule extends Module
         $tpl->addHelper('debug_panel', ['\Modules\Core\Components\DebugPanel', 'render']);
         $tpl->addHelper('param', ['\Modules\Core\Components\ParamsHelper', 'get']);
         $tpl->addHelper('humanizeDateTime', ['\Modules\Core\Components\Humanize', 'humanizeDateTime']);
+        $tpl->addHelper('humanizeSize', ['\Modules\Core\Components\Humanize', 'humanizeSize']);
         $tpl->addHelper('humanizePrice', ['\Modules\Core\Components\Humanize', 'numToStr']);
         $tpl->addHelper('limit', ['\Mindy\Helper\Text', 'limit']);
         $tpl->addHelper('strtotime', 'strtotime');

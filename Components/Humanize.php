@@ -16,6 +16,7 @@ namespace Modules\Core\Components;
 
 use DateTime;
 use DateInterval;
+use Mindy\Locale\Translate;
 use Modules\Core\CoreModule;
 
 class Humanize
@@ -150,5 +151,32 @@ class Humanize
         $humanized[] = $humanizeTime;
 
         return implode($delimiter, $humanized);
+    }
+
+    /**
+     * @param $size
+     * @param bool $minimal
+     * @return mixed
+     */
+    public static function humanizeSize($size, $minimal = true)
+    {
+        if ($size < 1024) {
+            $converted = $size;
+            $message = $minimal ? '{n} B' : '{n} byte|{n} bytes';
+        } elseif ($size < pow(1024, 2)) {
+            $converted = round($size / 1024);
+            $message = $minimal ? '{n} KB' : '{n} kilobyte|{n} kilobytes';
+        } elseif ($size < pow(1024, 3)) {
+            $converted = round($size / pow(1024, 2));
+            $message = $minimal ? '{n} MB' : '{n} megabyte|{n} megabytes';
+        } elseif ($size < pow(1024, 4)) {
+            $converted = round($size / pow(1024, 3));
+            $message = $minimal ? '{n} GB' : '{n} gigabyte|{n} gigabytes';
+        } else {
+            $converted = round($size / pow(1024, 4));
+            $message = $minimal ? '{n} TB' : '{n} terabyte|{n} terabytes';
+        }
+
+        return Translate::getInstance()->t('base', $message, $converted);
     }
 }
