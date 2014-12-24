@@ -72,31 +72,9 @@
                     {% endfor %}
                 </section>
             {% else %}
-                <script type="text/html" id="{{ inline.classNameShort }}-{{ inline.id }}-source">
-                    <section class="inline-form-item form-inline-section">
-                        <a class="form-inline-delete" href="#">&times;</a>
-                        <table class="form-inline-table">
-                            <tr>
-                                {% for field in inline %}
-                                    {% if not field.hidden %}
-                                        {% if not field.delete %}
-                                            <td>
-                                                {{ field|safe }}
-                                            </td>
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}
-                            </tr>
-                        </table>
-                        {% for field in inline %}
-                            {% if field.hidden %}
-                                {% if not field.delete %}
-                                    {{ field|safe }}
-                                {% endif %}
-                            {% endif %}
-                        {% endfor %}
-                    </section>
-                </script>
+                <code class="inline-source">
+                    <pre id="{{ inline.classNameShort }}-{{ inline.id }}-source"><section class="inline-form-item form-inline-section"><a class="form-inline-delete" href="#">&times;</a>{{ inline.renderType(inline.defaultTemplateType)|safe }}</section></pre>
+                </code>
                 <a href="#" class="inline-add"
                    data-id="{{ inline.classNameShort }}-{{ inline.id }}-source">{{ t('Add', 'core') }}</a>
             {% endif %}
