@@ -43,7 +43,7 @@ class BackendController extends CoreController
 
         $user = Mindy::app()->user;
         if ($user === null || ($user && ($user->is_superuser === false || $user->is_staff === false))) {
-            $this->r->redirect('admin.login');
+            $this->r->redirect('admin:login');
         }
     }
 
