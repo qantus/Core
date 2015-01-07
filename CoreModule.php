@@ -100,15 +100,15 @@ class CoreModule extends Module
             'items' => [
                 // [
                 //     'name' => self::t('Modules'),
-                //     'url' => 'core.module_list'
+                //     'url' => 'core:module_list'
                 // ],
                 [
                     'name' => self::t('Settings'),
-                    'url' => 'core.settings'
+                    'url' => 'core:settings'
                 ],
 //                [
 //                    'name' => self::t('Help'),
-//                    'url' => 'core.help-online'
+//                    'url' => 'core:help-online'
 //                ]
             ]
         ];
