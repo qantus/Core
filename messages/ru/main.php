@@ -6,6 +6,7 @@ return array (
   'Settings center' => 'Центр настроек',
   'Add' => 'Добавить',
   'Site name' => 'Название сайта',
+  'Home page' => 'На главную',
   'Today' => 'Сегодня',
   'Yesterday' => 'Вчера',
   'Delete' => 'Удалить',
