@@ -5,7 +5,7 @@ namespace Modules\Core;
 use Mindy\Base\Mindy;
 use Mindy\Base\Module;
 use Mindy\Locale\Translate;
-use Modules\Core\Components\UserLog;
+use Modules\Core\Models\UserLog;
 
 class CoreModule extends Module
 {
@@ -56,7 +56,7 @@ class CoreModule extends Module
             return method_exists($obj, $name);
         });
         $tpl->addHelper('user_actions', function ($by = 10) {
-            return \Modules\Core\Components\UserLog::read($by);
+            return UserLog::objects()->limit($by)->order(['-created_at'])->all();
         });
 
         $signal = $app->signal;
@@ -66,12 +66,23 @@ class CoreModule extends Module
 
     public static function recordActionInternal($owner, $text)
     {
-        $url = method_exists($owner, 'getAbsoluteUrl') ? $owner->getAbsoluteUrl() : '#';
-        UserLog::log(self::t('{model} [[{url}|{name}]] ' . $text, [
-            '{model}' => self::t($owner->classNameShort()),
-            '{url}' => $url,
-            '{name}' => (string)$owner
-        ]));
+        if ($owner->classNameShort() != UserLog::classNameShort()) {
+            $url = method_exists($owner, 'getAbsoluteUrl') ? $owner->getAbsoluteUrl() : null;
+
+            $app = Mindy::app();
+            UserLog::objects()->create([
+                'user' => $app->getUser()->getIsGuest() ? null : $app->getUser(),
+                'module' => $owner->getModuleName(),
+                'model' => $owner->classNameShort(),
+                'url' => $url,
+                'ip' => $app->getUser()->getIp(),
+                'name' => (string)$owner,
+                'message' => self::t('{model} {url} ' . $text, [
+                    '{model}' => self::t($owner->classNameShort()),
+                    '{url}' => $url ? "<a href='" . $owner->getAbsoluteUrl() . "'>" . (string)$owner . "</a>" : "",
+                ])
+            ]);
+        }
     }
 
     public static function afterSaveModel($owner, $isNew)

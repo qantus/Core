@@ -80,7 +80,7 @@ class MigrationCommand extends ConsoleCommand
             list($name, $timestamp) = explode('_', str_replace('.json', '', $fileName));
 
             if ($migrationModel) {
-                if ($isUp && $migrationModel->timestamp <= $timestamp) {
+                if ($isUp && $migrationModel->timestamp >= $timestamp) {
                     continue;
                 } else if ($migrationModel->timestamp > $timestamp) {
                     continue;

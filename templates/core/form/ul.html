@@ -31,7 +31,7 @@
 {% else %}
     <ul class="form-ul">
         {% for field in form %}
-            <li>{{ field|raw }}</li>
+            <li>{{ field|safe }}</li>
         {% endfor %}
     </ul>
 {% endif %}
