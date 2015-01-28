@@ -13,16 +13,27 @@
 
 namespace Modules\Core\Tables;
 
+use Mindy\Table\Columns\RawColumn;
 use Mindy\Table\Table;
+use Modules\Core\CoreModule;
 
 class UserLogTable extends Table
 {
     public function getColumns()
     {
         return [
-            'created_at',
-            'message',
-            'ip'
+            'created_at' => [
+                'class' => RawColumn::className(),
+                'title' => CoreModule::t('Created at')
+            ],
+            'message' => [
+                'class' => RawColumn::className(),
+                'title' => CoreModule::t('Message')
+            ],
+            'ip' => [
+                'class' => RawColumn::className(),
+                'title' => CoreModule::t('Ip')
+            ],
         ];
     }
 }
