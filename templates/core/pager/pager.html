@@ -7,7 +7,7 @@
             {% if this.hasPrevPage() %}
                 <a href="{{ this.getUrl(this.currentPage - 1) }}">&larr;</a>
             {% else %}
-                <span>&larr;</span>
+                <span class="prev">&larr;</span>
             {% endif %}
         </li>
 
@@ -20,7 +20,7 @@
         {% endif %}
 
         <li>
-            <span>{{ this.currentPage }}</span>
+            <span class="current">{{ this.currentPage }}</span>
         </li>
 
         {% if this.hasNextPage() %}
@@ -35,7 +35,7 @@
             {% if this.hasNextPage %}
                 <a href="{{ this.getUrl(this.currentPage+1) }}">&rarr;</a>
             {% else %}
-                <span>&rarr;</span>
+                <span class="next">&rarr;</span>
             {% endif %}
         </li>
         {% endif %}
