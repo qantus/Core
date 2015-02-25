@@ -1,6 +1,8 @@
 <?php
 
 namespace Modules\Core\Components;
+use Mindy\Utils\RenderTrait;
+use Modules\User\Models\Session;
 
 /**
  * 
@@ -17,10 +19,13 @@ namespace Modules\Core\Components;
 
 class DebugPanel
 {
+    use RenderTrait;
+
     public static function render()
     {
-        echo strtr("<section id='debug-panel'>MP: {memory_peak}</section>", [
-            "{memory_peak}" => self::bytesToSize(memory_get_peak_usage())
+        echo self::renderTemplate("core/debug_panel.html", [
+            'memory_peak' => self::bytesToSize(memory_get_peak_usage()),
+            'sessions' => Session::objects()->count()
         ]);
     }
 
