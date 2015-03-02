@@ -83,7 +83,7 @@ class CoreModule extends Module
                 'ip' => $app->getUser()->getIp(),
                 'name' => (string)$owner,
                 'message' => self::t($message, [
-                    '{url}' => $url ? "<a href='" . $owner->getAbsoluteUrl() . "'>" . (string)$owner . "</a>" : "",
+                    '{url}' => $url ? "<a href='" . $owner->getAbsoluteUrl() . "'>" . (string)$owner . "</a>" : (string)$owner,
                 ])
             ]);
         }
