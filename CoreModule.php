@@ -71,7 +71,9 @@ class CoreModule extends Module
     {
         if ($owner->classNameShort() != UserLog::classNameShort()) {
             $url = method_exists($owner, 'getAbsoluteUrl') ? $owner->getAbsoluteUrl() : null;
-
+            $message = strtr('{model} {url} ' . $text, [
+                '{model}' => self::t($owner->classNameShort())
+            ]);
             $app = Mindy::app();
             UserLog::objects()->create([
                 'user' => $app->getUser()->getIsGuest() ? null : $app->getUser(),
@@ -80,8 +82,7 @@ class CoreModule extends Module
                 'url' => $url,
                 'ip' => $app->getUser()->getIp(),
                 'name' => (string)$owner,
-                'message' => self::t('{model} {url} ' . $text, [
-                    '{model}' => self::t($owner->classNameShort()),
+                'message' => self::t($message, [
                     '{url}' => $url ? "<a href='" . $owner->getAbsoluteUrl() . "'>" . (string)$owner . "</a>" : "",
                 ])
             ]);
