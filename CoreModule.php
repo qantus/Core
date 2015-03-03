@@ -78,6 +78,7 @@ class CoreModule extends Module
                 '{model}' => $owner->classNameShort()
             ]);
             $app = Mindy::app();
+            $module = $owner->getModule();
             UserLog::objects()->create([
                 'user' => $app->getUser()->getIsGuest() ? null : $app->getUser(),
                 'module' => $owner->getModuleName(),
@@ -85,7 +86,7 @@ class CoreModule extends Module
                 'url' => $url,
                 'ip' => $app->getUser()->getIp(),
                 'name' => (string)$owner,
-                'message' => self::t($message, [
+                'message' => $module->t($message, [
                     '{url}' => $url ? "<a href='" . $owner->getAbsoluteUrl() . "'>" . (string)$owner . "</a>" : (string)$owner,
                 ])
             ]);
