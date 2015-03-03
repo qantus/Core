@@ -6,6 +6,7 @@ use Mindy\Base\Mindy;
 use Mindy\Base\Module;
 use Mindy\Locale\Translate;
 use Modules\Core\Models\UserLog;
+use Modules\User\Models\Session;
 
 class CoreModule extends Module
 {
@@ -69,7 +70,7 @@ class CoreModule extends Module
 
     public static function recordActionInternal($owner, $text)
     {
-        if ($owner->classNameShort() == UserLog::classNameShort() || $owner->classNameShort() == UserLog::classNameShort()) {
+        if ($owner->classNameShort() == UserLog::classNameShort() || $owner->classNameShort() == Session::classNameShort()) {
             return;
         } else {
             $url = method_exists($owner, 'getAbsoluteUrl') ? $owner->getAbsoluteUrl() : null;
