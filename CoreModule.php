@@ -70,7 +70,11 @@ class CoreModule extends Module
 
     public static function recordActionInternal($owner, $text)
     {
-        if ($owner->classNameShort() == UserLog::classNameShort() || $owner->classNameShort() == Session::classNameShort()) {
+        if (
+            $owner->classNameShort() == UserLog::classNameShort() ||
+            $owner->classNameShort() == Session::classNameShort() ||
+            Mindy::app()->getUser()->is_staff === false
+        ) {
             return;
         } else {
             $url = method_exists($owner, 'getAbsoluteUrl') ? $owner->getAbsoluteUrl() : null;
