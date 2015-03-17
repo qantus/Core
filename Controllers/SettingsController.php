@@ -51,7 +51,8 @@ class SettingsController extends BackendController
         $this->addBreadcrumb(CoreModule::t('Settings center'));
 
         $models = $this->reformatModels($this->getSettingsModels());
-        if ($this->r->isPost) {
+        $request = $this->getRequest();
+        if ($request->isPost) {
             $success = true;
             foreach ($models as $data) {
                 $form = $data['form'];
@@ -59,7 +60,8 @@ class SettingsController extends BackendController
                     $success = false;
                 }
             }
-            $this->r->flash->success(CoreModule::t($success ? 'Settings saved successfully' : 'Settings save fail'));
+            $request->flash->success(CoreModule::t($success ? 'Settings saved successfully' : 'Settings save fail'));
+            $request->refresh();
         }
 
         echo $this->render('core/settings.html', [
