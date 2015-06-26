@@ -38,4 +38,9 @@ class ApiBaseController extends CoreController
 
         return $this->formatReactRoute($data);
     }
+
+    public function end()
+    {
+        Mindy::app()->end();
+    }
 }
