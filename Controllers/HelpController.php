@@ -1,25 +1,15 @@
 <?php
-/**
- * 
- *
- * All rights reserved.
- * 
- * @author Falaleev Maxim
- * @email max@studio107.ru
- * @version 1.0
- * @company Studio107
- * @site http://studio107.ru
- * @date 03/09/14.09.2014 17:35
- */
 
 namespace Modules\Core\Controllers;
 
-use Mindy\Base\ApplicationList;
+use Modules\Core\CoreModule;
 
 class HelpController extends BackendController
 {
     public function actionIndex()
     {
+        $this->addBreadcrumb(CoreModule::t('Help'));
+        $this->addTitle(CoreModule::t('Help'));
         echo $this->render('core/help.html');
     }
 }

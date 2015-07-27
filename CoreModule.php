@@ -121,10 +121,10 @@ class CoreModule extends Module
         return [
             'name' => $this->getName(),
             'items' => [
-                // [
-                //     'name' => self::t('Modules'),
-                //     'url' => 'core:module_list'
-                // ],
+//                 [
+//                     'name' => self::t('Modules'),
+//                     'url' => 'core:module_list'
+//                 ],
                 [
                     'name' => self::t('Settings'),
                     'url' => 'core:settings'
