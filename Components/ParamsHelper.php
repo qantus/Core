@@ -27,10 +27,13 @@ class ParamsHelper
      * @param $name
      * @return string|null
      */
-    public static function get($name)
+    public static function get($name, $defaultValue = null)
     {
         $value = Mindy::app()->cache->get($name);
-        return $value ? $value : self::fetchSetting($name);
+        if (!$value) {
+            $value = self::fetchSetting($name);
+        }
+        return $value ? $value : $defaultValue;
     }
 
     /**
