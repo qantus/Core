@@ -196,4 +196,9 @@ class CoreController extends Controller
 
         return $model;
     }
+
+    public function end()
+    {
+        Mindy::app()->end();
+    }
 }
