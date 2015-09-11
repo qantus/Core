@@ -31,7 +31,8 @@ class Controller extends BaseController
         }
         return $this->renderTemplate($view, array_merge([
             'this' => $this,
-            'site' => $site
+            'site' => $site,
+            'locale' => Mindy::app()->locale
         ], $data));
     }
 

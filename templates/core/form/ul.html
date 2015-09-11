@@ -1,7 +1,8 @@
 {% if form.errors %}
     <ul class="form-errors">
         {% for name, errors in form.errors %}
-            {% for i, error in errors %}
+            {% for field_name, error in errors %}
+                {{ form.getField(name).label ? form.getField(name).label : name }}:
                 {% if error|is_array %}
                     {% for inline_name, inline_errors in error %}
                         <ul class="form-errors-inline">

@@ -56,7 +56,12 @@ class CoreController extends Controller
      */
     public function redirect($url, $data = null, $statusCode = 302)
     {
-        $this->r->redirect($url, $data, $statusCode);
+        $this->getRequest()->redirect($url, $data, $statusCode);
+    }
+
+    public function addLastModified($timestamp)
+    {
+        $this->getRequest()->addLastModified($timestamp);
     }
 
     /**
