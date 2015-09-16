@@ -2,8 +2,8 @@
 
 namespace Modules\Core\Commands;
 
-use Mindy\Console\ConsoleCommand;
 use Mindy\Base\Mindy;
+use Mindy\Console\ConsoleCommand;
 use Mindy\Helper\Alias;
 use Mindy\Helper\Console;
 use Mindy\Orm\Model;
@@ -22,59 +22,54 @@ use ReflectionClass;
  * @site http://studio107.ru
  * @date 28/04/14.04.2014 17:53
  */
-
 class DbCommand extends ConsoleCommand
 {
-    public function actionIndex()
-    {
-        echo Console::color("TODO documentation", Console::FOREGROUND_LIGHT_RED) . PHP_EOL;
-    }
-
     protected function getModels($module = null)
     {
-        $checkModule = $module !== null;
+        $app = Mindy::app();
         $models = [];
-        $modelFiles = glob(Alias::get('Modules') . '/*/Models/*.php');
-
-        foreach(Alias::find('Contrib.*') as $alias) {
-            $contribModels = glob($alias . '/*/Models/*.php');
-            if($contribModels) {
-                $modelFiles = array_merge($modelFiles, $contribModels);
+        if ($module === null) {
+            $modules = $app->getModules();
+            foreach ($modules as $name => $config) {
+                /** @var \Mindy\Base\Module $module */
+                $module = $app->getModule($name);
+                $tmp = $module->getModels();
+                $models = array_merge($models, $tmp);
+                echo Console::color(ucfirst($module->getId()) . ': ' . count($tmp), Console::FOREGROUND_YELLOW) . PHP_EOL;
+            }
+        } else {
+            if ($app->hasModule($module)) {
+                $module = $app->getModule($module);
+                $models = $module->getModels();
+                echo Console::color(ucfirst($module->getId()) . ': ' . count($models), Console::FOREGROUND_YELLOW) . PHP_EOL;
+            } else {
+                echo Console::color("Module not found or not enabled", Console::FOREGROUND_LIGHT_RED) . PHP_EOL;
+                exit(1);
             }
         }
 
-        $modules = [];
-        foreach($modelFiles as $file) {
-            $moduleName = basename(dirname(dirname($file)));
-            if(($checkModule && $module == $moduleName && Mindy::app()->hasModule($moduleName)) || (!$checkModule && Mindy::app()->hasModule($moduleName))) {
-                $modules[] = $moduleName;
-                $class = str_replace('.php', '', substr($file, strpos($file, 'Modules')));
-                $class = str_replace('/', '\\', $class);
-                if(is_subclass_of($class, Model::className())) {
-                    $reflectClass = new ReflectionClass($class);
-                    if($reflectClass->isAbstract()) {
-                        continue;
-                    }
-                    $models[$class] = new $class;
-                }
-            }
-        }
-        echo "Modules:" . PHP_EOL;
-        echo implode(PHP_EOL, array_unique($modules)) . PHP_EOL;
-        return $models;
+        return array_values($models);
     }
 
     public function actionDrop($module = null)
     {
         $models = $this->getModels($module);
-        $sync = new Sync(array_values($models));
-        $sync->delete();
+        $sync = new Sync($models);
+        $deleted = $sync->delete();
+        echo PHP_EOL . Console::color("Deleted: " . count($deleted), Console::FOREGROUND_LIGHT_RED) . PHP_EOL;
+        foreach ($deleted as $table) {
+            echo $table . PHP_EOL;
+        }
     }
 
     public function actionSync($module = null)
     {
         $models = $this->getModels($module);
-        $sync = new Sync(array_values($models));
-        $sync->create();
+        $sync = new Sync($models);
+        $created = $sync->create();
+        echo PHP_EOL . Console::color("Created: " . count($created), Console::FOREGROUND_LIGHT_RED) . PHP_EOL;
+        foreach ($created as $table) {
+            echo $table . PHP_EOL;
+        }
     }
 }
