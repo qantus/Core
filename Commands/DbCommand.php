@@ -4,11 +4,8 @@ namespace Modules\Core\Commands;
 
 use Mindy\Base\Mindy;
 use Mindy\Console\ConsoleCommand;
-use Mindy\Helper\Alias;
 use Mindy\Helper\Console;
-use Mindy\Orm\Model;
 use Mindy\Orm\Sync;
-use ReflectionClass;
 
 /**
  *
