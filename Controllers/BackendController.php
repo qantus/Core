@@ -6,10 +6,11 @@ use Mindy\Base\ApplicationList;
 use Mindy\Base\Mindy;
 use Mindy\Http\Request;
 use Modules\Core\CoreModule;
+use Modules\Meta\Components\MetaTrait;
 
 class BackendController extends CoreController
 {
-    use ApplicationList;
+    use ApplicationList, MetaTrait;
 
     public function accessRules()
     {
@@ -24,7 +25,7 @@ class BackendController extends CoreController
     public function filters()
     {
         $filters = [];
-        if(Mindy::app()->hasModule('User')) {
+        if (Mindy::app()->hasModule('User')) {
             $filters[] = [
                 '\Modules\User\Components\PermissionControlFilter',
                 'allowedActions' => $this->allowedActions()

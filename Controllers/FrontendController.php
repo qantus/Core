@@ -2,6 +2,8 @@
 
 namespace Modules\Core\Controllers;
 
+use Modules\Meta\Components\MetaTrait;
+
 /**
  *
  * FrontendController class file.
@@ -18,4 +20,5 @@ namespace Modules\Core\Controllers;
  */
 class FrontendController extends CoreController
 {
+    use MetaTrait;
 }

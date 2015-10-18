@@ -6,8 +6,6 @@ use Mindy\Base\Mindy;
 use Mindy\Controller\BaseController;
 use Mindy\Helper\Json;
 use Mindy\Utils\RenderTrait;
-use Modules\Meta\Components\MetaTrait;
-
 
 /**
  * All rights reserved.
@@ -21,7 +19,7 @@ use Modules\Meta\Components\MetaTrait;
  */
 class Controller extends BaseController
 {
-    use RenderTrait, MetaTrait;
+    use RenderTrait;
 
     public function render($view, array $data = [])
     {
