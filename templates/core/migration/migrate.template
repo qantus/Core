@@ -1,18 +1,18 @@
 <?php
 
-namespace {namespace};
+namespace {{ namespace|safe }};
 
 use Mindy\Query\Migration;
 
-class {name} extends Migration
+class {{ name|safe }} extends Migration
 {
     public function safeUp()
     {
-{safeUp}
+{{ safeUp|safe }}
     }
 
     public function safeDown()
     {
-{safeDown}
+{{ safeDown|safe }}
     }
 }

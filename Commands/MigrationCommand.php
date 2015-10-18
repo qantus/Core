@@ -13,14 +13,18 @@
 
 namespace Modules\Core\Commands;
 
+use Mindy\Base\Mindy;
 use Mindy\Console\ConsoleCommand;
 use Mindy\Helper\Alias;
 use Mindy\Orm\Migration;
 use Mindy\Orm\Sync;
+use Mindy\Utils\RenderTrait;
 use Modules\Core\Models\Migration as ModelMigration;
 
 class MigrationCommand extends ConsoleCommand
 {
+    use RenderTrait;
+
     protected function isToUpMigration($module, $model, $fileName = '', $db = null)
     {
         if (empty($fileName)) {
@@ -43,16 +47,22 @@ class MigrationCommand extends ConsoleCommand
         }
     }
 
-    public function actionMigrate($module, $model, $name = '', $db = null)
+    public function actionMigrate($module, $model = null, $name = '', $db = null)
     {
-        $className = strtr("\\Modules\\{module}\\Models\\{model}", [
-            '{module}' => ucfirst($module),
-            '{model}' => ucfirst($model)
-        ]);
+        if ($model === null) {
+            $models = Mindy::app()->getModule($module)->getModels();
+        } else {
+            $className = strtr("\\Modules\\{module}\\Models\\{model}", [
+                '{module}' => ucfirst($module),
+                '{model}' => ucfirst($model)
+            ]);
 
-        if (class_exists($className) === false) {
-            echo "Model not found in namespace: " . $className . PHP_EOL;
-            exit(1);
+            if (class_exists($className) === false) {
+                echo "Model not found in namespace: " . $className . PHP_EOL;
+                exit(1);
+            }
+
+            $models = [new $className];
         }
 
         $path = Alias::get('App.Modules.' . ucfirst($module) . '.Migrations');
@@ -63,75 +73,83 @@ class MigrationCommand extends ConsoleCommand
 
         $isUp = $this->isToUpMigration($module, $model, $name, $db);
 
-        $modelInstance = new $className;
-        $migration = new Migration($modelInstance, $path);
+        foreach ($models as $modelInstance) {
+            $migration = new Migration($modelInstance, $path);
 
-        $migrationModel = ModelMigration::objects()->last()->get([
-            'module' => ucfirst($module),
-            'model' => ucfirst($model)
-        ]);
-
-        $migrations = $migration->getMigrations();
-        if (!$isUp) {
-            rsort($migrations);
-        }
-        foreach ($migrations as $migrationFile) {
-            $fileName = basename($migrationFile);
-            list($name, $timestamp) = explode('_', str_replace('.json', '', $fileName));
-
-            if ($migrationModel) {
-                if ($isUp && $migrationModel->timestamp >= $timestamp) {
-                    continue;
-                } else if ($migrationModel->timestamp > $timestamp) {
-                    continue;
-                }
-            }
-
-            $migrationClassName = strtr("\\Modules\\{module}\\Migrations\\{migration}", [
-                '{module}' => ucfirst($module),
-                '{migration}' => str_replace('.json', '', $fileName)
+            $migrationModel = ModelMigration::objects()->last()->get([
+                'module' => ucfirst($module),
+                'model' => get_class($modelInstance)
             ]);
 
-            include_once($path . DIRECTORY_SEPARATOR . str_replace('.json', '', $fileName) . '.php');
-
-            /** @var $migrationInstance \Mindy\Query\Migration */
-            $migrationInstance = new $migrationClassName;
-            echo "Process: " . str_replace('.json', '', $fileName) . PHP_EOL;
-
-            if ($isUp) {
-                $migrationInstance->up();
-
-                ModelMigration::objects()->create([
-                    'module' => ucfirst($module),
-                    'model' => ucfirst($model),
-                    'timestamp' => $timestamp
-                ]);
-            } else {
-                $migrationInstance->down();
-
-                ModelMigration::objects()->delete([
-                    'module' => ucfirst($module),
-                    'model' => ucfirst($model),
-                    'timestamp' => $timestamp
-                ]);
+            $migrations = $migration->getMigrations();
+            if (!$isUp) {
+                rsort($migrations);
             }
+            foreach ($migrations as $migrationFile) {
+                $fileName = basename($migrationFile);
+                list($name, $timestamp) = explode('_', str_replace('.json', '', $fileName));
 
-            if (!empty($name) && $fileName == $name) {
-                break;
+                if ($migrationModel) {
+                    if ($isUp && $migrationModel->timestamp >= $timestamp) {
+                        continue;
+                    } else if ($migrationModel->timestamp > $timestamp) {
+                        continue;
+                    }
+                }
+
+                $migrationClassName = strtr("\\Modules\\{module}\\Migrations\\{migration}", [
+                    '{module}' => ucfirst($module),
+                    '{migration}' => str_replace('.json', '', $fileName)
+                ]);
+
+                include_once($path . DIRECTORY_SEPARATOR . str_replace('.json', '', $fileName) . '.php');
+
+                /** @var $migrationInstance \Mindy\Query\Migration */
+                $migrationInstance = new $migrationClassName;
+                echo "Process: " . str_replace('.json', '', $fileName) . PHP_EOL;
+
+                if ($isUp) {
+                    $migrationInstance->up();
+
+                    ModelMigration::objects()->create([
+                        'module' => ucfirst($module),
+                        'model' => get_class($modelInstance),
+                        'timestamp' => $timestamp
+                    ]);
+                } else {
+                    $migrationInstance->down();
+
+                    ModelMigration::objects()->delete([
+                        'module' => ucfirst($module),
+                        'model' => get_class($modelInstance),
+                        'timestamp' => $timestamp
+                    ]);
+                }
+
+                if (!empty($name) && $fileName == $name) {
+                    break;
+                }
             }
+            echo "Complete" . PHP_EOL;
         }
-        echo "Complete" . PHP_EOL;
     }
 
-    public function actionSchemamigration($module, $model, $auto = true, $db = null)
+    public function actionSchemamigration($module, $model = null, $auto = true, $db = null)
     {
-        $className = strtr("\\Modules\\{module}\\Models\\{model}", [
-            '{module}' => ucfirst($module),
-            '{model}' => ucfirst($model)
-        ]);
-        if (class_exists($className) === false) {
-            echo "Model not found in namespace: " . $className . PHP_EOL;
-            exit(1);
+        if ($model === null) {
+            $models = Mindy::app()->getModule($module)->getModels();
+        } else {
+            $className = strtr("\\Modules\\{module}\\Models\\{model}", [
+                '{module}' => ucfirst($module),
+                '{model}' => ucfirst($model)
+            ]);
+
+            if (class_exists($className) === false) {
+                echo "Model not found in namespace: " . $className . PHP_EOL;
+                exit(1);
+            }
+
+            $models = [new $className];
         }
 
         $path = Alias::get('App.Modules.' . ucfirst($module) . '.Migrations');
@@ -139,56 +157,57 @@ class MigrationCommand extends ConsoleCommand
             mkdir($path);
         }
 
-        $model = new $className;
-        $migration = new Migration($model, $path);
-        $migration->setDb($db);
+        foreach ($models as $model) {
+            $migration = new Migration($model, $path);
+            $migration->setDb($db);
 
-        if ($migration->hasChanges() == false) {
-            echo "Error: " . $migration->getName() . ". No changes." . PHP_EOL;
-            die(1);
-        }
-
-        $namespace = strtr("Modules\\{module}\\Migrations", [
-            '{module}' => ucfirst($module)
-        ]);
-
-        if ($auto) {
-            $safeUp = $migration->getSafeUp();
-            $safeDown = $migration->getSafeDown();
-        } else {
-            $safeUp = '';
-            $safeDown = '';
-        }
-
-        if ($migration->save()) {
-            // TODO $db
-            $fileName = $path . DIRECTORY_SEPARATOR . $migration->getName();
-            $source = $this->generateTemplate($namespace, $migration->getName(), $safeUp, $safeDown);
-            file_put_contents($fileName . '.php', $source);
-
-            list(, $timestamp) = explode('_', $migration->getName());
-
-            $model = new ModelMigration;
-
-            $sync = new Sync($model);
-            if ($sync->hasTable($model)) {
-                $sync->create();
+            if ($migration->hasChanges() == false) {
+                echo "Error: " . $migration->getName() . ". No changes." . PHP_EOL;
+                die(1);
             }
 
-            echo "Migration created: " . $migration->getName() . PHP_EOL;
-        } else {
-            echo "Failed to save migration: " . $migration->getName() . ". No changes." . PHP_EOL;
-            die(1);
+            $namespace = strtr("Modules\\{module}\\Migrations", [
+                '{module}' => ucfirst($module)
+            ]);
+
+            if ($auto) {
+                $safeUp = $migration->getSafeUp();
+                $safeDown = $migration->getSafeDown();
+            } else {
+                $safeUp = '';
+                $safeDown = '';
+            }
+
+            if ($migration->save()) {
+                // TODO $db
+                $fileName = $path . DIRECTORY_SEPARATOR . $migration->getName();
+                $source = $this->generateTemplate($namespace, $migration->getName(), $safeUp, $safeDown);
+                file_put_contents($fileName . '.php', $source);
+
+                list(, $timestamp) = explode('_', $migration->getName());
+
+                $model = new ModelMigration;
+
+                $sync = new Sync($model);
+                if ($sync->hasTable($model)) {
+                    $sync->create();
+                }
+
+                echo "Migration created: " . $migration->getName() . PHP_EOL;
+            } else {
+                echo "Failed to save migration: " . $migration->getName() . ". No changes." . PHP_EOL;
+                die(1);
+            }
         }
     }
 
     public function generateTemplate($namespace, $name, $safeUp = '', $safeDown = '')
     {
-        return strtr(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . 'migrate_template.txt'), [
-            '{namespace}' => $namespace,
-            '{name}' => $name,
-            '{safeUp}' => $safeUp,
-            '{safeDown}' => $safeDown,
+        return self::renderTemplate('core/migration/migrate.template', [
+            'namespace' => $namespace,
+            'name' => $name,
+            'safeUp' => $safeUp,
+            'safeDown' => $safeDown,
         ]);
     }
 }

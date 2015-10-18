@@ -29,12 +29,15 @@ class Migration extends Model
         return [
             'module' => [
                 'class' => CharField::className(),
+                'editable' => false,
             ],
             'model' => [
                 'class' => CharField::className(),
+                'editable' => false,
             ],
             'timestamp' => [
                 'class' => IntField::className(),
+                'editable' => false,
             ],
         ];
     }
