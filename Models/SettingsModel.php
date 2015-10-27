@@ -28,12 +28,12 @@ abstract class SettingsModel extends Model
     {
         $className = get_called_class();
         $manager = new Manager(new $className);
-        list($instance, $created) = $manager->asArray($asArray)->getOrCreate(['id' => 1]);
+        list($instance, ) = $manager->asArray($asArray)->getOrCreate(['id' => 1]);
         return $instance;
     }
 
-    public function t($text)
+    public static function t($str, $params = [], $dic = 'settings')
     {
-        return $this->getModule()->t($text, [], 'settings');
+        return self::getModule()->t($str, $params, $dic);
     }
 }
