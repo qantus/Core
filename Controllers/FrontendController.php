@@ -18,7 +18,7 @@ use Modules\Meta\Components\MetaTrait;
  * @version 1.0
  *
  */
-class FrontendController extends CoreController
+class FrontendController extends Controller
 {
     use MetaTrait;
 }

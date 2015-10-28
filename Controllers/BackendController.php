@@ -7,10 +7,26 @@ use Mindy\Base\Mindy;
 use Mindy\Http\Request;
 use Modules\Core\CoreModule;
 use Modules\Meta\Components\MetaTrait;
+use Modules\User\Permissions\PermissionControlFilter;
 
-class BackendController extends CoreController
+class BackendController extends Controller
 {
     use ApplicationList, MetaTrait;
+
+    public function __construct($id, $module = null, Request $request)
+    {
+        parent::__construct($id, $module, $request);
+
+        $this->pageTitle = CoreModule::t('Control panel');
+
+        $user = Mindy::app()->getUser();
+        if (
+            $user === null ||
+            ($user && ($user->is_superuser === false || $user->is_staff === false))
+        ) {
+            $this->getRequest()->redirect('admin:login');
+        }
+    }
 
     public function accessRules()
     {
@@ -27,7 +43,7 @@ class BackendController extends CoreController
         $filters = [];
         if (Mindy::app()->hasModule('User')) {
             $filters[] = [
-                '\Modules\User\Components\PermissionControlFilter',
+                'class' => PermissionControlFilter::class,
                 'allowedActions' => $this->allowedActions()
             ];
         } else {
@@ -36,21 +52,10 @@ class BackendController extends CoreController
         return $filters;
     }
 
-    public function __construct($id, $module = null, Request $request)
-    {
-        parent::__construct($id, $module, $request);
-
-        $this->pageTitle = CoreModule::t('Control panel');
-
-        $user = Mindy::app()->user;
-        if ($user === null || ($user && ($user->is_superuser === false || $user->is_staff === false))) {
-            $this->r->redirect('admin:login');
-        }
-    }
-
     public function render($view, array $data = [])
     {
-        $data['apps'] = $this->getApplications();
-        return parent::render($view, $data);
+        return parent::render($view, array_merge($data, [
+            'apps' => $this->getApplications()
+        ]));
     }
 }

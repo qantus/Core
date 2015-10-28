@@ -3,9 +3,10 @@
 namespace Modules\Core\Controllers;
 
 use Mindy\Base\Mindy;
-use Mindy\Helper\Json;
+use Mindy\Locale\Translate;
+use Modules\User\Permissions\Rule;
 
-class ApiBaseController extends CoreController
+class ApiBaseController extends Controller
 {
     protected function formatReactRoute(array $data)
     {
@@ -37,6 +38,20 @@ class ApiBaseController extends CoreController
         }
 
         return $this->formatReactRoute($data);
+    }
+
+    /**
+     * @param null|Rule $rule
+     */
+    public function accessDenied($rule)
+    {
+        if (Mindy::app()->auth->getIsGuest()) {
+            http_response_code(403);
+            echo $this->json([
+                'status' => false,
+                'error' => Translate::getInstance()->t('main', 'You are not authorized to perform this action.'),
+            ]);
+        }
     }
 
     public function end()
