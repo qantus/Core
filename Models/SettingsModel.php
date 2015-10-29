@@ -32,8 +32,8 @@ abstract class SettingsModel extends Model
         return $instance;
     }
 
-    public function t($text)
+    public static function t($str, $params = [], $dic = 'settings')
     {
-        return $this->getModule()->t($text, [], 'settings');
+        return self::getModule()->t($str, $params, $dic);
     }
 }
