@@ -56,6 +56,9 @@ class ApiBaseController extends Controller
 
     public function end()
     {
+        if (defined('MINDY_TESTS')) {
+            return;
+        }
         Mindy::app()->end();
     }
 }
