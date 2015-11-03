@@ -91,10 +91,8 @@ class Controller extends BaseController
      * This method may be invoked when access check fails.
      * @throws \Mindy\Exception\HttpException when called unless login is required.
      */
-    public function accessDenied($rule)
+    public function accessDenied($rule = null)
     {
-        if (Mindy::app()->auth->getIsGuest()) {
-            $this->error(403);
-        }
+        $this->error(403);
     }
 }

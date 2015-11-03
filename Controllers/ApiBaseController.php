@@ -43,15 +43,13 @@ class ApiBaseController extends Controller
     /**
      * @param null|Rule $rule
      */
-    public function accessDenied($rule)
+    public function accessDenied($rule = null)
     {
-        if (Mindy::app()->auth->getIsGuest()) {
-            http_response_code(403);
-            echo $this->json([
-                'status' => false,
-                'error' => Translate::getInstance()->t('main', 'You are not authorized to perform this action.'),
-            ]);
-        }
+        http_response_code(403);
+        echo $this->json([
+            'status' => false,
+            'error' => Translate::getInstance()->t('main', 'You are not authorized to perform this action.'),
+        ]);
     }
 
     public function end()
