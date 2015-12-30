@@ -30,6 +30,7 @@ class Controller extends BaseController
             $site = Mindy::app()->getModule('Sites')->getSite();
         }
         return $this->renderTemplate($view, array_merge([
+            'debug' => MINDY_DEBUG,
             'this' => $this,
             'site' => $site,
             'locale' => Mindy::app()->locale
