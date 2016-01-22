@@ -6,8 +6,8 @@ use Mindy\Base\Mindy;
 use Mindy\Controller\BaseController;
 use Mindy\Helper\Json;
 use Mindy\Utils\RenderTrait;
-use Modules\Meta\Components\MetaTrait;
-
+use Modules\User\Permissions\Rule;
+use Modules\User\Permissions\PermissionControlFilter;
 
 /**
  * All rights reserved.
@@ -21,7 +21,7 @@ use Modules\Meta\Components\MetaTrait;
  */
 class Controller extends BaseController
 {
-    use RenderTrait, MetaTrait;
+    use RenderTrait;
 
     public function render($view, array $data = [])
     {
@@ -30,6 +30,7 @@ class Controller extends BaseController
             $site = Mindy::app()->getModule('Sites')->getSite();
         }
         return $this->renderTemplate($view, array_merge([
+            'debug' => MINDY_DEBUG,
             'this' => $this,
             'site' => $site,
             'locale' => Mindy::app()->locale
@@ -38,7 +39,61 @@ class Controller extends BaseController
 
     public function json(array $data = [])
     {
-        header('Content-Type: application/json');
+        if (defined('MINDY_TESTS') == false) {
+            header('Content-Type: application/json');
+        }
         return JSON::encode($data);
+    }
+
+    /**
+     * Returns the access rules for this controller.
+     * Override this method if you use the {@link filterAccessControl accessControl} filter.
+     * @return array list of access rules. See {@link CAccessControlFilter} for details about rule specification.
+     */
+    public function accessRules()
+    {
+        return [
+            [
+                // allow only authorized users
+                'allow' => true,
+                'users' => ['@']
+            ],
+            [
+                // deny all users
+                'allow' => false,
+                'users' => ['*'],
+            ],
+        ];
+    }
+
+    public function filters()
+    {
+        return [
+            [
+                'class' => PermissionControlFilter::class,
+                'allowedActions' => $this->allowedActions(),
+                'rules' => $this->accessRules(),
+                'deniedCallback' => [$this, 'accessDenied']
+            ]
+        ];
+    }
+
+    /**
+     * @return array разрешенные действия (actions) по умолчанию
+     */
+    public function allowedActions()
+    {
+        return [];
+    }
+
+    /**
+     * Denies the access of the user.
+     * @param string $message the message to display to the user.
+     * This method may be invoked when access check fails.
+     * @throws \Mindy\Exception\HttpException when called unless login is required.
+     */
+    public function accessDenied($rule = null)
+    {
+        $this->error(403);
     }
 }

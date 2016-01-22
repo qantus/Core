@@ -6,34 +6,12 @@ use Mindy\Base\ApplicationList;
 use Mindy\Base\Mindy;
 use Mindy\Http\Request;
 use Modules\Core\CoreModule;
+use Modules\Meta\Components\MetaTrait;
+use Modules\User\Permissions\PermissionControlFilter;
 
-class BackendController extends CoreController
+class BackendController extends Controller
 {
-    use ApplicationList;
-
-    public function accessRules()
-    {
-        return [
-            // allow only authorized users
-            ['allow', 'users' => ['@']],
-            // deny all users
-            ['deny', 'users' => ['*']],
-        ];
-    }
-
-    public function filters()
-    {
-        $filters = [];
-        if(Mindy::app()->hasModule('User')) {
-            $filters[] = [
-                '\Modules\User\Components\PermissionControlFilter',
-                'allowedActions' => $this->allowedActions()
-            ];
-        } else {
-            $filters[] = ['accessControl'];
-        }
-        return $filters;
-    }
+    use ApplicationList, MetaTrait;
 
     public function __construct($id, $module = null, Request $request)
     {
@@ -41,15 +19,29 @@ class BackendController extends CoreController
 
         $this->pageTitle = CoreModule::t('Control panel');
 
-        $user = Mindy::app()->user;
-        if ($user === null || ($user && ($user->is_superuser === false || $user->is_staff === false))) {
-            $this->r->redirect('admin:login');
+        $user = Mindy::app()->getUser();
+        if (
+            $user === null ||
+            ($user && ($user->is_superuser == false || $user->is_staff == false))
+        ) {
+            $this->getRequest()->redirect('admin:login');
         }
+    }
+
+    public function accessRules()
+    {
+        return [
+            // allow only authorized users
+            ['allow' => true, 'users' => ['@']],
+            // deny all users
+            ['allow' => false, 'users' => ['*']],
+        ];
     }
 
     public function render($view, array $data = [])
     {
-        $data['apps'] = $this->getApplications();
-        return parent::render($view, $data);
+        return parent::render($view, array_merge($data, [
+            'apps' => $this->getApplications()
+        ]));
     }
 }

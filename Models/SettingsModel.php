@@ -28,7 +28,7 @@ abstract class SettingsModel extends Model
     {
         $className = get_called_class();
         $manager = new Manager(new $className);
-        list($instance, $created) = $manager->asArray($asArray)->getOrCreate(['id' => 1]);
+        list($instance, ) = $manager->asArray($asArray)->getOrCreate(['id' => 1]);
         return $instance;
     }
 

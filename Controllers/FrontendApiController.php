@@ -1,26 +1,14 @@
 <?php
+/**
+ * Created by max
+ * Date: 17/12/15
+ * Time: 17:33
+ */
 
 namespace Modules\Core\Controllers;
 
-use Modules\Meta\Components\MetaTrait;
-
-/**
- *
- * FrontendController class file.
- *
- * @author Falaleev Maxim <max@studio107.com>
- * @link http://studio107.ru/
- * @copyright Copyright &copy; 2010-2012 Studio107
- * @license http://www.cms107.com/license/
- * @package modules.core.components
- * @since 1.1.1
- * @version 1.0
- *
- */
-class FrontendController extends Controller
+class FrontendApiController extends ApiBaseController
 {
-    use MetaTrait;
-
     /**
      * Returns the access rules for this controller.
      * Override this method if you use the {@link filterAccessControl accessControl} filter.
