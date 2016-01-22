@@ -22,7 +22,7 @@ class BackendController extends Controller
         $user = Mindy::app()->getUser();
         if (
             $user === null ||
-            ($user && ($user->is_superuser === false || $user->is_staff === false))
+            ($user && ($user->is_superuser == false || $user->is_staff == false))
         ) {
             $this->getRequest()->redirect('admin:login');
         }
@@ -32,24 +32,10 @@ class BackendController extends Controller
     {
         return [
             // allow only authorized users
-            ['allow', 'users' => ['@']],
+            ['allow' => true, 'users' => ['@']],
             // deny all users
-            ['deny', 'users' => ['*']],
+            ['allow' => false, 'users' => ['*']],
         ];
-    }
-
-    public function filters()
-    {
-        $filters = [];
-        if (Mindy::app()->hasModule('User')) {
-            $filters[] = [
-                'class' => PermissionControlFilter::class,
-                'allowedActions' => $this->allowedActions()
-            ];
-        } else {
-            $filters[] = ['accessControl'];
-        }
-        return $filters;
     }
 
     public function render($view, array $data = [])
