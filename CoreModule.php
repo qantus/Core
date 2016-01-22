@@ -70,6 +70,10 @@ class CoreModule extends Module
 
     public static function recordActionInternal($owner, $text)
     {
+        if (defined('MINDY_TESTS')) {
+            return;
+        }
+
         if (
             $owner->classNameShort() == UserLog::classNameShort() ||
             $owner->classNameShort() == Session::classNameShort() ||
