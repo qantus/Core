@@ -74,10 +74,12 @@ class CoreModule extends Module
             return;
         }
 
+        $user = Mindy::app()->getUser();
         if (
             $owner->classNameShort() == UserLog::classNameShort() ||
             $owner->classNameShort() == Session::classNameShort() ||
-            Mindy::app()->getUser()->is_staff === false
+            $user->is_staff ||
+            $user->is_superuser
         ) {
             return;
         } else {
