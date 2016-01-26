@@ -6,8 +6,8 @@ use Mindy\Base\Mindy;
 use Mindy\Controller\BaseController;
 use Mindy\Helper\Json;
 use Mindy\Utils\RenderTrait;
-use Modules\User\Permissions\Rule;
 use Modules\User\Permissions\PermissionControlFilter;
+use Modules\User\Permissions\Rule;
 
 /**
  * All rights reserved.
