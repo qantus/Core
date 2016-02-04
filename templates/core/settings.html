@@ -5,12 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    {% for _, data in models %}
-        <h4>{{ data.model }}</h4>
-        <form action="{% url 'core:settings' %}" method="post" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ data.form|safe }}
-            <input type="submit" value="Сохранить" class="button" />
-        </form>
-    {% endfor %}
+    {% if models|is_empty %}
+        <p>Настройки отсутствуют</p>
+    {% else %}
+        {% for _, data in models %}
+            <h4>{{ data.model }}</h4>
+            <form action="{% url 'core:settings' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ data.form|safe }}
+                <input type="submit" value="Сохранить" class="button" />
+            </form>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

@@ -76,8 +76,7 @@ class CoreModule extends Module
 
         $user = Mindy::app()->getUser();
         if (
-            $owner->classNameShort() == UserLog::classNameShort() ||
-            $owner->classNameShort() == Session::classNameShort() ||
+            in_array($owner->className(), [UserLog::class, Session::class]) ||
             $user->is_staff ||
             $user->is_superuser
         ) {
