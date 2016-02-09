@@ -4,6 +4,8 @@ namespace Modules\Core;
 
 use Mindy\Base\Mindy;
 use Mindy\Base\Module;
+use Mindy\Helper\Alias;
+use Mindy\Helper\Json;
 use Mindy\Locale\Translate;
 use Modules\Core\Models\UserLog;
 use Modules\User\Models\Session;
@@ -24,6 +26,12 @@ class CoreModule extends Module
         $app = Mindy::app();
 
         $tpl = $app->template;
+        $tpl->addHelper('get_static_version', function () {
+            $filePath = Alias::get('www.static') . '/package.json';
+            $content = file_get_contents($filePath);
+            $data = JSON::decode($content);
+            return $data['version'];
+        });
         $tpl->addHelper('t', function ($text, $category, $params = []) {
             if ($category !== 'app' && !strpos($category, '.')) {
                 $category .= '.main';
