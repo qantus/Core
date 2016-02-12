@@ -7,7 +7,6 @@ use Mindy\Base\Mindy;
 use Mindy\Http\Request;
 use Modules\Core\CoreModule;
 use Modules\Meta\Components\MetaTrait;
-use Modules\User\Permissions\PermissionControlFilter;
 
 class BackendController extends Controller
 {
@@ -20,10 +19,11 @@ class BackendController extends Controller
         $this->pageTitle = CoreModule::t('Control panel');
 
         $user = Mindy::app()->getUser();
-        if (
-            $user === null ||
-            ($user && ($user->is_superuser == false || $user->is_staff == false))
-        ) {
+        if ($user === null) {
+            $this->getRequest()->redirect('admin:login');
+        } else if ($user->is_superuser) {
+
+        } else if ($user->is_staff == false) {
             $this->getRequest()->redirect('admin:login');
         }
     }
