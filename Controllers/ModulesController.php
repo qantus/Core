@@ -1,9 +1,9 @@
 <?php
 /**
- * 
+ *
  *
  * All rights reserved.
- * 
+ *
  * @author Falaleev Maxim
  * @email max@studio107.ru
  * @version 1.0
@@ -14,79 +14,27 @@
 
 namespace Modules\Core\Controllers;
 
-
-use Guzzle\Http\Client;
-use Guzzle\Http\Exception\CurlException;
 use Mindy\Base\Mindy;
-use Modules\Core\Components\ModuleManager;
+use Modules\Core\CoreModule;
+use Modules\Core\Tables\ModuleTable;
 
 class ModulesController extends BackendController
 {
-    private $_client;
-
-    public function actionInstall($name)
+    public function actionIndex()
     {
-        $version = ModuleManager::install($name);
-        if ($version) {
-            Mindy::app()->flash->success('Success');
-        } else {
-            Mindy::app()->flash->error('Failed');
+        $modules = [];
+        $modulesRaw = Mindy::app()->getModules();
+        foreach (array_keys($modulesRaw) as $name) {
+            $modules[] = Mindy::app()->getModule($name);
         }
 
-        $this->redirect('core.module_list');
-    }
+        $this->addBreadcrumb(CoreModule::t('Core'));
+        $this->addBreadcrumb(CoreModule::t('Modules'));
 
-    public function actionUpdate($name, $version = null)
-    {
-        $version = ModuleManager::update($name, $version);
-        if ($version) {
-            Mindy::app()->flash->success('Success');
-        } else {
-            Mindy::app()->flash->error('Failed');
-        }
-
-        $this->redirect('core.module_list');
-    }
-
-    public function actionView($name)
-    {
-        $core = Mindy::app()->getModule('Core');
-        echo $this->render('core/module_view.html', [
-            'data' => $core->update->getInfo($name)
+        echo $this->render('core/module_list.html', [
+            'modules' => $modules,
+            'table' => new ModuleTable($modules)
         ]);
     }
 
-    public function actionIndex()
-    {
-        try {
-            $tmp = $this->sendRequest();
-            $data = $tmp['objects'];
-        } catch(CurlException $e) {
-            $data = [];
-        }
-        echo $this->render('core/module_list.html', ['modules' => $data]);
-    }
-
-    protected function getClient()
-    {
-        if($this->_client === null) {
-            $this->_client = new Client(Mindy::app()->getModule('Core')->repositoryUrl);
-        }
-        return $this->_client;
-    }
-
-    /**
-     * @param $url
-     * @return array
-     */
-    public function sendRequest()
-    {
-        return $this->getClient()->get()->send()->json();
-    }
-
-    public function render($view, array $data = [])
-    {
-        $data['apps'] = $this->getApplications();
-        return parent::render($view, $data);
-    }
 }
