@@ -1,7 +1,9 @@
 {% extends "admin/base.html" %}
 
-{% block content %}
+{% block heading %}
     <h1>{{ t('Modules', 'core') }}</h1>
+{% endblock %}
 
+{% block content %}
     {{ table.render()|safe }}
 {% endblock %}
