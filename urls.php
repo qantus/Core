@@ -17,10 +17,6 @@ return [
         'name' => 'module_view',
         'callback' => '\Modules\Core\Controllers\ModulesController:view'
     ],
-    '/settings' => [
-        'name' => 'settings',
-        'callback' => '\Modules\Core\Controllers\SettingsController:index'
-    ],
     '/help/online' => [
         'name' => 'help-online',
         'callback' => '\Modules\Core\Controllers\HelpController:index'

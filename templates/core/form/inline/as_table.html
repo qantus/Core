@@ -1,0 +1,20 @@
+<table class="form-table inline">
+    <thead>
+        <tr>
+            {% for field in form %}
+                {% if not field.hidden %}
+                    <th>{{ field.label|safe }}</th>
+                {% endif %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {% for field in form %}
+            {% if not field.hidden %}
+                <td>{{ field.renderInput()|safe }}</td>
+            {% endif %}
+        {% endfor %}
+    </tr>
+    </tbody>
+</table>

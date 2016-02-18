@@ -1,0 +1,9 @@
+<ul class="form-inline">
+    {% for field in form %}
+        {% if not field.hidden %}
+            <li>
+                {{ field|safe }}
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>
