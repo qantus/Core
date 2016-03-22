@@ -23,6 +23,8 @@ class CoreLibrary extends Library
     public function getHelpers()
     {
         return [
+            'basename' => 'basename',
+            'strtok' => 'strtok',
             'locale' => function () {
                 return Mindy::app()->locale;
             },

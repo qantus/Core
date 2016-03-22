@@ -1,6 +1,7 @@
 <?php
 
 return array(
+    'Control panel' => 'Панель настроек',
     'Name' => 'Название',
     'Version' => 'Версия',
     'Changes saved' => 'Изменения сохранены',

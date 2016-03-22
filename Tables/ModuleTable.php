@@ -15,6 +15,10 @@ use Modules\Core\CoreModule;
 
 class ModuleTable extends Table
 {
+    public $html = [
+        'id' => 'table-main'
+    ];
+
     public $enablePagination = false;
 
     /**

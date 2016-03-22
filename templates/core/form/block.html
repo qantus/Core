@@ -12,7 +12,7 @@
                         </ul>
                     {% endfor %}
                 {% else %}
-                    <li>{{ form.getField(name).label }}: {{ error }}</li>
+                    <li>{{ form.getField(name).label ? form.getField(name).label : name }}: {{ error }}</li>
                 {% endif %}
             {% endfor %}
         {% endfor %}

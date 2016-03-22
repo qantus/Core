@@ -11,7 +11,7 @@ use Modules\User\Permissions\PermissionControlFilter;
 
 class BackendController extends Controller
 {
-    use ApplicationList, MetaTrait;
+    use MetaTrait;
 
     public function __construct($id, $module = null, Request $request)
     {
@@ -36,12 +36,5 @@ class BackendController extends Controller
             // deny all users
             ['allow' => false, 'users' => ['*']],
         ];
-    }
-
-    public function render($view, array $data = [])
-    {
-        return parent::render($view, array_merge($data, [
-            'apps' => $this->getApplications()
-        ]));
     }
 }
