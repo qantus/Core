@@ -60,7 +60,6 @@ class CoreLibrary extends Library
             },
             'convert_base64', ['\Modules\Mail\Helper\MailHelper', 'convertToBase64'],
             'ucfirst' => ['\Mindy\Helper\Text', 'mbUcfirst'],
-            'debug_panel' => ['\Modules\Core\Components\DebugPanel', 'render'],
             'param' => ['\Modules\Core\Components\ParamsHelper', 'get'],
             'humanizeDateTime' => ['\Modules\Core\Components\Humanize', 'humanizeDateTime'],
             'humanizeSize' => ['\Modules\Core\Components\Humanize', 'humanizeSize'],
