@@ -33,6 +33,7 @@ class Controller extends BaseController
             'debug' => MINDY_DEBUG,
             'this' => $this,
             'site' => $site,
+            'app' => Mindy::app(),
             'locale' => Mindy::app()->locale
         ], $data));
     }

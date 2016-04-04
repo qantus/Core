@@ -32,6 +32,7 @@ class ModulesController extends BackendController
         $this->addBreadcrumb(CoreModule::t('Modules'));
 
         echo $this->render('core/module_list.html', [
+            'module' => $this->getModule(),
             'modules' => $modules,
             'table' => new ModuleTable($modules)
         ]);
