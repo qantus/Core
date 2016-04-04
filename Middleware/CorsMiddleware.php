@@ -4,7 +4,7 @@ namespace Modules\Core\Middleware;
 
 use Mindy\Helper\Console;
 use Mindy\Http\Request;
-use Mindy\Middleware\Middleware;
+use Mindy\Middleware\Middleware\Middleware;
 
 class CorsMiddleware extends Middleware
 {
