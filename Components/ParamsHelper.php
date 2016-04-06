@@ -50,7 +50,11 @@ class ParamsHelper
         $model = ucfirst($model);
         /** @var \Modules\Core\Models\SettingsModel $className */
         $className = '\\Modules\\' . $module . '\\Models\\' . $model . 'Settings';
-        $data = $className::getInstance(true);
-        return isset($data[$param]) ? $data[$param] : null;
+        if (class_exists($className)) {
+            $data = $className::getInstance(true);
+            return isset($data[$param]) ? $data[$param] : null;
+        } else {
+            return null;
+        }
     }
 }
