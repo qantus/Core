@@ -11,6 +11,11 @@ class {{ module }}Module extends Module
 
     }
 
+    public function getDescription()
+    {
+        return '';
+    }
+
     public function getMenu()
     {
         return [

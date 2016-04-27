@@ -2,9 +2,9 @@
 
 namespace Modules\{{ module }}\Controllers;
 
-use Modules\Core\Controllers\Controller;
+use Modules\Core\Controllers\FrontendController;
 
-class {{ name }}Controller extends Controller
+class {{ name }}Controller extends FrontendController
 {
 	public function actionIndex()
 	{

@@ -1,4 +1,4 @@
-{% if form.errors %}
+{% if errors and form.errors %}
     <ul class="form-errors">
         {% for name, errors in form.errors %}
             {% for i, error in errors %}
@@ -9,7 +9,7 @@
 {% endif %}
 
 {% set renderFields = form.getRenderFields() %}
-{% set renderFieldsets = renderFields|length == form.getFields()|length %}
+{% set renderFieldsets = renderFields|length == form.getFieldsInit()|length %}
 {% if form.fieldsets and renderFieldsets %}
     {% for fieldset, fields in form.fieldsets %}
         {% if fields|length == 0 %}
