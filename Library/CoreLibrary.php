@@ -58,7 +58,8 @@ class CoreLibrary extends Library
                 $data = JSON::decode($content);
                 return $data['version'];
             },
-            'convert_base64', ['\Modules\Mail\Helper\MailHelper', 'convertToBase64'],
+            'base64_encode' => 'base64_encode',
+            'base64_decode' => 'base64_decode',
             'ucfirst' => ['\Mindy\Helper\Text', 'mbUcfirst'],
             'param' => ['\Modules\Core\Components\ParamsHelper', 'get'],
             'humanizeDateTime' => ['\Modules\Core\Components\Humanize', 'humanizeDateTime'],
