@@ -2,7 +2,7 @@
 
 namespace Modules\Core\Controllers;
 
-use Modules\Meta\Components\MetaTrait;
+use Modules\Core\Components\MetaTrait;
 
 /**
  *
