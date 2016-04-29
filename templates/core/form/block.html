@@ -2,7 +2,11 @@
     <ul class="form-errors">
         {% for name, errors in form.errors %}
             {% for i, error in errors %}
-                <li>{{ form.getField(name).label ? form.getField(name).label : name }}: {{ error }}</li>
+                {% if form.hasField(name) %}
+                    <li>{{ form.getField(name).label ? form.getField(name).label : name }}: {{ error }}</li>
+                {% else %}
+                    <li>{{ name }}: {{ error }}</li>
+                {% endif %}
             {% endfor %}
         {% endfor %}
     </ul>

@@ -16,9 +16,5 @@ return [
     '/modules/{name:\w+}' => [
         'name' => 'module_view',
         'callback' => '\Modules\Core\Controllers\ModulesController:view'
-    ],
-    '/help/online' => [
-        'name' => 'help-online',
-        'callback' => '\Modules\Core\Controllers\HelpController:index'
-    ],
+    ]
 ];

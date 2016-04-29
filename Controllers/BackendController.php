@@ -2,7 +2,6 @@
 
 namespace Modules\Core\Controllers;
 
-use Mindy\Base\ApplicationList;
 use Mindy\Base\Mindy;
 use Mindy\Http\Request;
 use Modules\Core\CoreModule;
