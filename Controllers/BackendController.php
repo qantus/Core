@@ -3,7 +3,6 @@
 namespace Modules\Core\Controllers;
 
 use Mindy\Base\Mindy;
-use Mindy\Http\Request;
 use Modules\Core\CoreModule;
 use Modules\Core\Components\MetaTrait;
 
