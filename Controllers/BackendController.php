@@ -3,17 +3,16 @@
 namespace Modules\Core\Controllers;
 
 use Mindy\Base\Mindy;
-use Mindy\Http\Request;
 use Modules\Core\CoreModule;
-use Modules\Meta\Components\MetaTrait;
+use Modules\Core\Components\MetaTrait;
 
 class BackendController extends Controller
 {
     use MetaTrait;
 
-    public function __construct($id, $module = null, Request $request)
+    public function __construct($id, $module = null)
     {
-        parent::__construct($id, $module, $request);
+        parent::__construct($id, $module);
 
         $this->pageTitle = CoreModule::t('Control panel');
 
