@@ -5,7 +5,7 @@ namespace Modules\Core\Controllers;
 use Mindy\Base\Mindy;
 use Mindy\Controller\BaseController;
 use Mindy\Helper\Json;
-use Mindy\Utils\RenderTrait;
+use Mindy\Helper\Traits\RenderTrait;
 use Modules\User\Permissions\PermissionControlFilter;
 use Modules\User\Permissions\Rule;
 

@@ -16,7 +16,7 @@ namespace Modules\Core\Fields;
 
 use Mindy\Form\Fields\Field;
 use Mindy\Helper\Json;
-use Mindy\Utils\RenderTrait;
+use Mindy\Helper\Traits\RenderTrait;
 
 class JsonListField extends Field
 {

@@ -11,7 +11,7 @@ namespace Modules\Core\Commands;
 use Exception;
 use Mindy\Console\ConsoleCommand;
 use Mindy\Helper\Alias;
-use Mindy\Utils\RenderTrait;
+use Mindy\Helper\Traits\RenderTrait;
 
 class CrudCommand extends ConsoleCommand
 {

@@ -18,7 +18,7 @@ use Mindy\Console\ConsoleCommand;
 use Mindy\Helper\Alias;
 use Mindy\Orm\Migration;
 use Mindy\Orm\Sync;
-use Mindy\Utils\RenderTrait;
+use Mindy\Helper\Traits\RenderTrait;
 use Modules\Core\Models\Migration as ModelMigration;
 
 class MigrationCommand extends ConsoleCommand
