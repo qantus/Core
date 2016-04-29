@@ -5,7 +5,6 @@ namespace Modules\Core\Controllers;
 use Modules\Core\Components\MetaTrait;
 
 /**
- *
  * FrontendController class file.
  *
  * @author Falaleev Maxim <max@studio107.com>
