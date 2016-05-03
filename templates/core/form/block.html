@@ -24,13 +24,13 @@
             <legend>{{ fieldset }}</legend>
             {% for field in fields %}
                 {% if field in renderFields %}
-                    <div class="form-block">{{ form.getField(field)|raw }}</div>
+                    <div class="form-block">{{ form.getField(field).render()|raw }}</div>
                 {% endif %}
             {% endfor %}
         </fieldset>
     {% endfor %}
 {% else %}
     {% for field in form %}
-        <div class="form-block">{{ field|raw }}</div>
+        <div class="form-block">{{ field.render()|raw }}</div>
     {% endfor %}
 {% endif %}

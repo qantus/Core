@@ -60,6 +60,9 @@ class CoreLibrary extends Library
             },
             'base64_encode' => 'base64_encode',
             'base64_decode' => 'base64_decode',
+            'csrf_token' => function () {
+                return Mindy::app()->request->csrf->getValue();
+            },
             'ucfirst' => ['\Mindy\Helper\Text', 'mbUcfirst'],
             'param' => ['\Modules\Core\Components\ParamsHelper', 'get'],
             'humanizeDateTime' => ['\Modules\Core\Components\Humanize', 'humanizeDateTime'],
