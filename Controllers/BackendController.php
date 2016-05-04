@@ -14,6 +14,7 @@ class BackendController extends Controller
     {
         parent::__construct($id, $module);
 
+        header('Cache-Control: max-age=0');
         $this->pageTitle = CoreModule::t('Control panel');
 
         $user = Mindy::app()->getUser();
