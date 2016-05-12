@@ -23,6 +23,15 @@ class Controller extends BaseController
 {
     use RenderTrait;
 
+    public function init()
+    {
+        parent::init();
+
+        if (MINDY_DEBUG) {
+            header('Cache-Control: max-age=0');
+        }
+    }
+
     public function render($view, array $data = [])
     {
         $site = null;
