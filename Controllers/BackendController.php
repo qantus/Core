@@ -24,6 +24,8 @@ class BackendController extends Controller
         } else if ($user->is_staff == false) {
             $this->getRequest()->redirect('admin:login');
         }
+
+        header('Cache-Control: max-age=0');
     }
 
     public function accessRules()
