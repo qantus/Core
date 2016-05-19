@@ -18,7 +18,8 @@ class CoreModule extends Module
         return [
             'name' => $this->getName(),
             'items' => [
-                ['name' => self::t('Modules'), 'url' => 'core:module_list']
+                ['name' => self::t('Modules'), 'url' => 'core:module_list'],
+                ['name' => self::t('Routes'), 'url' => 'core:route_list']
             ]
         ];
     }

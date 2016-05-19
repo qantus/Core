@@ -1,6 +1,8 @@
 <?php
 
-return array(
+return [
+    'Routes' => 'Роуты',
+    'Route' => 'Роут',
     'Control panel' => 'Панель настроек',
     'Name' => 'Название',
     'Version' => 'Версия',
@@ -44,4 +46,4 @@ return array(
     'Home' => 'Главная',
     'Core' => 'Ядро',
     'IP' => 'IP',
-);
+];

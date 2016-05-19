@@ -12,15 +12,14 @@
  * @date 11/07/14.07.2014 16:04
  */
 
-namespace Modules\Core\Controllers;
+namespace Modules\Core\Controllers\Admin;
 
 use Mindy\Base\Mindy;
-use Modules\Core\CoreModule;
-use Modules\Core\Tables\ModuleTable;
+use Modules\Core\Controllers\BackendController;
 
 class ModulesController extends BackendController
 {
-    public function actionIndex()
+    public function actionList()
     {
         $modules = [];
         $modulesRaw = Mindy::app()->getModules();
@@ -28,13 +27,9 @@ class ModulesController extends BackendController
             $modules[] = Mindy::app()->getModule($name);
         }
 
-        $this->addBreadcrumb(CoreModule::t('Core'));
-        $this->addBreadcrumb(CoreModule::t('Modules'));
-
-        echo $this->render('core/module_list.html', [
+        echo $this->render('core/admin/module/list.html', [
             'module' => $this->getModule(),
             'modules' => $modules,
-            'table' => new ModuleTable($modules)
         ]);
     }
 

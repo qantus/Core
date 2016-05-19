@@ -3,18 +3,10 @@
 return [
     '/modules/' => [
         'name' => 'module_list',
-        'callback' => '\Modules\Core\Controllers\ModulesController:index'
+        'callback' => '\Modules\Core\Controllers\Admin\ModulesController:list'
     ],
-    '/modules/install/{name:\w+}' => [
-        'name' => 'module_install',
-        'callback' => '\Modules\Core\Controllers\ModulesController:install'
+    '/routes/' => [
+        'name' => 'route_list',
+        'callback' => '\Modules\Core\Controllers\Admin\RouteController:list'
     ],
-    '/modules/update/{name:\w+}/{version}' => [
-        'name' => 'module_update',
-        'callback' => '\Modules\Core\Controllers\ModulesController:update'
-    ],
-    '/modules/{name:\w+}' => [
-        'name' => 'module_view',
-        'callback' => '\Modules\Core\Controllers\ModulesController:view'
-    ]
 ];
